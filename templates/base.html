@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-161498657-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-161498657-1');
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CoronaTrack |{% block title %}{% endblock %}</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<style>
+.foot{
+  background-color: #f5f5f5;
+}
+.footer {
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+    body{
+        background-color: lightgrey;
+    }
+    .navbar-header{
+      margin-left:5px;
+      width:100%;
+    }
+    .bg-color{
+      background-color: lightgrey;
+    }
+    .bg-dark{
+      color: white;
+    }
+    .gedf-wrapper {
+      margin-top: 0.97rem;
+      }
+
+    }
+    @media (min-width: 992px) {
+      .gedf-main {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        }
+
+      .gedf-card {
+        margin-bottom: 2.77rem;
+        }
+      }
+      .my-custom-scrollbar {
+        position: relative;
+        max-height: 350px;
+        overflow: auto;
+      }
+      .my-fixed-scrollbar {
+        position: relative;
+        max-height: 550px;
+        max-width: 800px;
+        overflow: auto;
+      }
+      .figure-graph{
+        padding-left: 0rem;
+        padding-right: 0rem;
+        padding: 0rem;
+      }
+      .btn-lg{
+        margin-left: 1rem;
+      }
+
+    .table-wrapper-scroll-y {
+    display: block;
+    }
+  .danger{
+    background-color: rgb(238, 72, 72);
+    color: white;
+  }
+  .success{
+    background-color: rgb(72, 168, 72);
+    color: white;
+  }
+  .warning{
+    background-color: rgb(212, 212, 35);
+    color:black;
+  }
+  .btn-cst{
+    height: 60px;
+  }
+  span{
+    float:right;
+  }
+</style>
+<body>
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% url 'india_status' %}">
+      <div class="h4">CoronaTrack</div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-item nav-link dropdown-toggle" href="{% url 'india_status' %}" id="navbarDropdown"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            India-Status
+          </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'india_status' %}">
+                India-Status</a>
+              <a class="dropdown-item" href="#helpline">
+              India-Helplines</a>
+              <a class="dropdown-item" href="#testcenter">
+              India-Test Centers</a>
+              <a class="dropdown-item" href="{% url 'india_news' %}">
+              India-News</a>
+            </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'global_status' %}">
+            Global Status
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'global_map' %}">
+            Map
+          </a>
+        </li>
+
+
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-item nav-link dropdown-toggle" href="{% url 'india_status' %}" id="navbarDropdown"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            News
+          </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'india_news' %}">
+                India-News</a>
+              <a class="dropdown-item" href="{% url 'global_news' %}">
+                Global-News</a>
+            </div>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            Covid19
+          </a>
+        </li>
+      </ul>
+    </div>
+</nav>
+
+    {% block content%}
+
+    {% endblock %}
+    <!-- <div class="container-fluid foot">
+      <footer class="footer">
+        <div class="container">
+          <span class="text-muted">
+             Created and Managed by Abhishek Tiwari
+          </span>
+        </div>
+      </footer>
+    </div> -->
+
+</body>
+</html>

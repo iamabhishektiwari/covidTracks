@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block title %}
+News and updates
+{% endblock %}
+{% load mathfilters %}
+
+{% block content %}
+
+<style media="screen">
+  .container-fluid{
+    width: 97%;
+    padding: 1%;
+    margin: 1%;
+    background-color: white;
+    border-radius: 10px;
+  }
+</style>
+<div class="container-fluid header-box">
+  <div class="row">
+    <div class="col-md-9">
+     <h3>Latest News and updates | Coronavirus Outbreak | {{ Region }}</h3>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  {% for new in news %}
+  <div class="card mb-3" style="max-width: 940px;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{ new.urlToImage }}" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ new.title }}</h5>
+          <p class="card-text">{{ new.description }}</p>
+          <div class="card-text"> <small class="text-muted"><a target="_blank" href="{{ new.url }}">Read more</a> </small></div>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+ </div>
+ {% endfor %}
+
+</div>
+
+
+
+{% endblock %}
