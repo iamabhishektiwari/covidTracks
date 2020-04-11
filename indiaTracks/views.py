@@ -42,7 +42,7 @@ class Helpline(View):
     def get(self, request):
 
         context = {
-            'phoneno':self.stateinfo['phoneno'],
+            'phoneno':stateinfo['phoneno'],
         }
         return render(request,self.mytemplate,context)
 
@@ -67,7 +67,7 @@ class Map(View):
         retlist = [["State Code", "State", "Number"],];
 
         for state in states:
-            state_code = self.stateinfo['statecode'][state.name]
+            state_code = stateinfo['statecode'][state.name]
             State = state.name
             number = state.totalconfirmed
 
@@ -128,7 +128,7 @@ class India(View):
             'totalconfirmed':totalconfirmed,
             'totalrecovered':totalrecovered,
             'totaldeaths':totaldeaths,
-            'phoneno':self.stateinfo['phoneno'],
+            'phoneno':stateinfo['phoneno'],
             'StateDistrict':StateDistrict,
             'record_update_time':self.record_update_time,
             'nongov_totalconfirmed':nongov_totalconfirmed,
