@@ -4,7 +4,7 @@ from django.db.models import Sum
 import requests
 import json
 import os
-THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+THIS_FOLDER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 dateinfo = ['1-22-20','1-23-20','1-24-20','1-25-20','1-26-20',
@@ -172,7 +172,7 @@ def globalTimeSeries():
     print("###################################################")
     url = "https://covid19-india-data.herokuapp.com/GlobalTimeSeries"
     page = requests.get(url).json()
-    my_file = os.path.join(THIS_FOLDER, 'globaltimeseries.json')
+    my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
     with open(my_file, 'w') as outfile:
         json.dump(page, outfile)
 
@@ -182,8 +182,8 @@ def globalTimeSeries():
 
 def SaveRenderTimeSeriesData(countries):
     page = {}
-    my_file = os.path.join(THIS_FOLDER, 'globaltimeseries.json')
-    with open('helper_data/globaltimeseries.json', "r") as read_file:
+    my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
+    with open(my_file, "r") as read_file:
         page = json.load(read_file)
     rowdata = []
     i=1;
@@ -199,8 +199,8 @@ def SaveRenderTimeSeriesData(countries):
 
 def smallGraph(country):
     page = {}
-    my_file = os.path.join(THIS_FOLDER, 'globaltimeseries.json')
-    with open('helper_data/globaltimeseries.json', "r") as read_file:
+    my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
+    with open(my_file, "r") as read_file:
         page = json.load(read_file)
     rowdata = []
     i =1

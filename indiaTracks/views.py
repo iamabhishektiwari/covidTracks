@@ -8,8 +8,14 @@ import time
 import json
 from getNews import NewsFromApi
 from .updateData import fetchData, findDataSample2
+import os
 # Create your views here.
+THIS_FOLDER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+my_file = os.path.join(THIS_FOLDER, 'helper_data/stateinfo.json')
+stateinfo = {}
+with open(my_file, 'r') as openfile:
+    stateinfo = json.load(openfile)
 
 
 class DataUpdate(View):
@@ -30,9 +36,7 @@ class DataUpdate(View):
 
 
 class Helpline(View):
-    stateinfo = {}
-    with open('helper_data/stateinfo.json', 'r') as openfile:
-        stateinfo = json.load(openfile)
+
     mytemplate = 'helpline.html'
     unsupported = 'Unsupported operation'
     def get(self, request):
@@ -51,9 +55,7 @@ class Helpline(View):
 class Map(View):
     mytemplate = 'india_maps.html'
     unsupported = 'Unsupported operation'
-    stateinfo = {}
-    with open('helper_data/stateinfo.json', 'r') as openfile:
-        stateinfo = json.load(openfile)
+
     def get(self, request):
 
         totalconfirmed = ImpParam.objects.get(key='totalconfirmed').value
@@ -93,9 +95,6 @@ class India(View):
     nongov_lastupdate = ImpParam.objects.get(key='nongov_lastupdate').value
     mytemplate = 'india_status.html'
     unsupported = 'Unsupported operation'
-    stateinfo = {}
-    with open('helper_data/stateinfo.json', 'r') as openfile:
-        stateinfo = json.load(openfile)
     def get(self, request):
 
         totalconfirmed = ImpParam.objects.get(key='totalconfirmed').value
