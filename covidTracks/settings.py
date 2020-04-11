@@ -26,7 +26,7 @@ SECRET_KEY = 'adgi4+3b84p=p7-m6yl@f)n-bs1&g7*=j!^jz50j6(%^2-)u7('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost','bolt.pythonanywhere.com']
 
 
 # Application definition
