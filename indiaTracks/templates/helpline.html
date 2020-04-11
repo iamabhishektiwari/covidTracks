@@ -1,0 +1,344 @@
+
+{% extends 'base.html' %}
+{% block title %}
+India-Status
+{% endblock %}
+{% load mathfilters %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<style media="screen">
+
+  .container-fluid{
+    width: 97%;
+    padding: 1%;
+    margin: 1%;
+    background-color: white;
+    border-radius: 10px;
+  }
+  .container-fx{
+    width: 97%;
+    padding: 1%;
+    margin: 1%;
+    background-color: lightgrey;
+    border-radius: 10px;
+  }
+  .header-box{
+    width: 80%;
+    height: 1%;
+    background-color: white;
+  }
+  .btn-sp{
+    border-radius: 15px;
+    margin: 10px;
+    width: 90%;
+
+  }
+
+  span{
+    height:30px;
+    width:auto;
+    float:right;
+  }
+
+  .my-fixed-scrollbar{
+    background-color:white;
+  }
+
+  p{
+  color: white;
+  font-family: arial;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.small-width{
+  margin-left:5%;
+  padding-left:5%;
+  width:80%;
+}
+h3{
+  color:blue;
+}
+a{
+  color:red;
+}
+.pdd{
+  margin-left:10%;
+}
+.pdd2{
+  margin-left:50%;
+}
+.pdd3{
+  margin-left:90%;
+}
+.txt{
+  color:black;
+}
+
+.padding_extra{
+  padding-top:1%;
+  margin-top:1%;
+}
+</style>
+
+
+
+
+<div class="container-fluid" id="helpline">
+  <h1>Helpline</h1>
+  <h4>Ministry of Health & Family Welfare has provided these helpline numbers of States & Union Territories (UTs).</h4>
+  <div class="space">
+    <br>
+  </div>
+  <div class="container">
+
+    <h4> National Helpline Number </h4> <b><h3> 1075  |  1800-112-545 </h3></b>
+    <h4> Central Helpline Number </h4> <b><h3> +91-11-23978043  |  +91-11-23978046 </h3></b>
+    <h4> Central Helpline Email </h4> <b><h3> ncov2019@gmail.com </h3></b>
+
+  </div>
+
+  <div class="container-fluid small-width">
+  <table class="table table-sm table-condensed table-hover table-bordered table-striped">
+    <thead>
+      <tr>
+        <th scope="col">State/Union Territory</th>
+        <th scope="col">HelpLine number</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for state,contact in phoneno.items %}
+      <tr>
+        <td>{{ state }}</td>
+        <td>{{ contact }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="container-fluid" id="testcenter">
+  <h1>Test Centers</h1>
+  <h4> Test Centres across the Country </h4>
+  <div class="space">
+    <br>
+  </div>
+  <div class="container">
+
+    <ul class="list-group">
+      <h4>  Andhra Pradesh  </h4>
+      <h5>
+        <li> Sri Venkateswara Institute of Medical Sciences in Tirupati </li>
+        <li> GMC, Anantapur </li>
+        <li> Siddhartha Medical College, Vijayawada </li>
+        <li> Ranagaraya Medical College, Kakinada </li>
+      </h5>
+      <hr>
+      <h4> Andaman and Nicobar</h4>
+      <h5>
+        <li>Regional Medical Research Centre, Port Blair</li>
+      </h5>
+      <hr>
+      <h4>Assam</h4>
+      <h5>
+        <li>Gauhati Medical College, Guwahati</li>
+        <li>Regional Medical Research Centre, Dibrugarh</li>
+        <li>Silchar Medical College, Silchar</li>
+        <li>Jorhat Medical College, Jorhat</li>
+      </h5>
+      <hr>
+
+      <h4>Bihar</h4>
+      <h5>
+        <li>Rajendra Memorial Research Institute of Medical Sciences, Patna</li>
+      </h5>
+      <hr>
+
+      <h4>Chandigarh</h4>
+      <h5>
+        <li>Post Graduate Institute of Medical Education & Research</li>
+      </h5>
+      <hr>
+
+      <h4>Chhattisgarh</h4>
+      <h5>
+        <li>AIIMS, Raipur</li>
+      </h5>
+      <hr>
+
+      <h4>Delhi</h4>
+      <h5>
+        <li>AIIMS</li>
+      </h5>
+      <hr>
+
+      <h4>Delhi</h4>
+      <h5>
+        <li>AIIMS</li>
+      </h5>
+      <hr>
+
+      <h4>Gujarat</h4>
+      <h5>
+        <li>BJ Medical College, Ahmedabad</li>
+        <li>M P Shah Government Medical College, Jamnagar</li>
+      </h5>
+      <hr>
+
+      <h4>Haryana</h4>
+      <h5>
+        <li>Pt B D Sharma Post Graduate Institute of Medical Sciences, Rohtak</li>
+        <li>BPS Government Medical College, Sonipat</li>
+      </h5>
+      <hr>
+
+      <h4>Himachal Pradesh</h4>
+      <h5>
+        <li>Indira Gandhi Medical College, Shimla</li>
+        <li>Dr Rajendra Prasad Government Medical College, Kangra, Tanda</li>
+      </h5>
+      <hr>
+
+      <h4>Jammu-Kashmir</h4>
+      <h5>
+        <li>Sher-I-Kashmir Institute of Medical Sciences, Srinagar</li>
+        <li>Government Medical College, Jammu</li>
+        <li>Government Medical College, Srinagar</li>
+      </h5>
+      <hr>
+
+      <h4>Jharkhand</h4>
+      <h5>
+        <li>MGM Medical College, Jamshedpur</li>
+      </h5>
+      <hr>
+
+      <h4>Karnataka</h4>
+      <h5>
+        <li>Bangalore Medical College & Research Institute, Bengaluru</li>
+        <li>National Institute of Virology Field Unit, Bengaluru</li>
+        <li>Mysore Medical College & Research Institute, Mysore</li>
+        <li>Hassan Institute of Medical Sciences, Hassan</li>
+        <li>Shimoga Institute of Medical Sciences, Shivamoga</li>
+      </h5>
+      <hr>
+
+      <h4>Kerala</h4>
+      <h5>
+        <li>National Institute of Virology Field, Kerala Unit</li>
+        <li>Government Medical College, Thriuvananthapuram</li>
+        <li>Government Medical College, Kozhikhode</li>
+        <li>Government Medical College, Thrissur</li>
+      </h5>
+      <hr>
+
+      <h4>Madhya Pradesh</h4>
+      <h5>
+        <li>AIIMS, Bhopal</li>
+        <li>National Institute of Research in Tribal Health (NIRTH), Jabalpur</li>
+      </h5>
+      <hr>
+
+      <h4>Maharashtra</h4>
+      <h5>
+        <li>Indira Gandhi Government Medical College, Nagpur</li>
+        <li>Kasturba Hospital for Infectious Diseases, Mumbai</li>
+        <li>NIV Mumbai Unit</li>
+      </h5>
+      <hr>
+
+      <h4>Manipur</h4>
+      <h5>
+        <li>JN Institute of Medical Sciences Hospital, Imphal</li>
+        <li>Regional Institute of Medical Science, Imphal</li>
+      </h5>
+      <hr>
+
+      <h4>Meghalaya</h4>
+      <h5>
+        <li>North Eastern Indira Gandhi Institute of Health and Medical Sciences, Shillong</li>
+      </h5>
+      <hr>
+
+      <h4>Odisha</h4>
+      <h5>
+        <li>Regional Medical Research Centre, Bhubaneswar</li>
+      </h5>
+      <hr>
+
+      <h4>Puducherry</h4>
+      <h5>
+        <li>Jawaharlal Institute of Postgraduate Medical Education & Research, Puducherry</li>
+      </h5>
+      <hr>
+
+      <h4>Punjab</h4>
+      <h5>
+        <li>Government Medical College, Patiala</li>
+        <li>Government Medical College, Amritsar</li>
+      </h5>
+      <hr>
+
+      <h4>Rajasthan</h4>
+      <h5>
+        <li>Sawai Man Singh Hospital, Jaipur</li>
+        <li>Dr S N Medical College, Jodhpur</li>
+        <li>Jhalawar Medical College, Jhalawar</li>
+        <li>SP Medical College, Bikaner</li>
+        <li>RNT Medical college, Udaipur</li>
+      </h5>
+      <hr>
+      <h4>Tamil Nadu</h4>
+      <h5>
+        <li>King’s Institute of Preventive Medicine & Research, Chennai</li>
+        <li>Government Medical College, Theni</li>
+        <li>Tirunelveli Medical College, Tirunelveli</li>
+        <li>Government Medical College, Thiruvarur</li>
+      </h5>
+      <hr>
+
+      <h4>Telangana</h4>
+      <h5>
+        <li>Gandhi Medical College, Secunderabad</li>
+        <li>Osmania Medical college, Hyderabad</li>
+      </h5>
+      <hr>
+
+      <h4>Tripura</h4>
+      <h5>
+        <li>Government Medical College, Agartala</li>
+      </h5>
+      <hr>
+
+      <h4>Uttar Pradesh</h4>
+      <h5>
+        <li>King George Medical University, Lucknow</li>
+        <li>Institute of Medical Sciences, Banaras Hindu University, Varanasi</li>
+        <li>Jawaharlal Nehru Medical College, Aligarh</li>
+      </h5>
+      <hr>
+
+      <h4>Uttarakhand</h4>
+      <h5>
+        <li>Government Medical College, Haldwani</li>
+      </h5>
+      <hr>
+
+      <h4>West Bengal</h4>
+      <h5>
+        <li>National Institute of Cholera and Enteric Diseases, Kolkata</li>
+        <li>IPGMER, Kolkata</li>
+      </h5>
+      <hr>
+
+    </ul>
+
+  </div>
+</div>
+
+
+{% endblock %}

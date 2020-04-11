@@ -4,7 +4,7 @@ import requests
 from .models import Country, Province, City, ImpParam
 import time
 from django.db.models import Sum
-from .updateData import fetchData, InternalCalculations, GlobalTotalCalc
+from .updateData import fetchData, InternalCalculations, GlobalTotalCalc, globalTimeSeries, SaveRenderTimeSeriesData,smallGraph
 from django.http import HttpResponse,HttpResponseRedirect
 from datetime import datetime
 from getNews import NewsFromApi
@@ -13,7 +13,18 @@ from getNews import NewsFromApi
 
 
 
+class Covid(View):
+    mytemplate = 'covid19.html'
+    unsupported = 'Unsupported operation'
+    def get(self, request):
 
+        context = {
+
+        }
+        return render(request,self.mytemplate,context)
+
+    def post(self, request):
+        return HttpResponse(self.unsupported)
 
 class DataUpdate(View):
     mytemplate = 'update_data_status.html'
@@ -23,6 +34,7 @@ class DataUpdate(View):
         fetchData()
         InternalCalculations()
         GlobalTotalCalc()
+        globalTimeSeries()
 
         context = {
             'message':"Success",
@@ -35,6 +47,7 @@ class DataUpdate(View):
 
 
 class Global(View):
+
     mytemplate = 'global_status.html'
     unsupported = 'Unsupported operation'
     def get(self, request):
@@ -51,6 +64,8 @@ class Global(View):
                 x = {region:subregs}
                 subregionlist.update(x)
 
+
+
         context = {
             'regions':regions,
             'totalconfirmed':totalconfirmed,
@@ -65,8 +80,13 @@ class Global(View):
 
 
 class Map(View):
-    mytemplate = 'maps.html'
+    mytemplate = 'global_maps.html'
     unsupported = 'Unsupported operation'
+    top4 = Country.objects.all().order_by('-totalconfirmed')[0:4]
+    rowdata1 = smallGraph(top4[0])
+    rowdata2 = smallGraph(top4[1])
+    rowdata3 = smallGraph(top4[2])
+    rowdata4 = smallGraph(top4[3])
     def get(self, request):
 
         regions = Country.objects.all().order_by('-totalconfirmed')
@@ -75,6 +95,9 @@ class Map(View):
         totalconfirmed = ImpParam.objects.get(key='totalconfirmed').value
         regions_list = [];
         graph_data = [['Country', 'Cases']]
+
+
+
         for region in regions:
             graph_data.append([region.name, region.totalconfirmed])
             prov = Province.objects.all().filter(country=region)
@@ -91,7 +114,15 @@ class Map(View):
             'regions':regions_list,
             'activefor':"Global",
             'graph_data':graph_data,
-            'options':options
+            'options':options,
+            'top1':self.top4[0],
+            'top2':self.top4[1],
+            'top3':self.top4[2],
+            'top4':self.top4[3],
+            'rowdata1':self.rowdata1,
+            'rowdata2':self.rowdata2,
+            'rowdata3':self.rowdata3,
+            'rowdata4':self.rowdata4,
         }
         return render(request,self.mytemplate,context)
 
@@ -156,6 +187,14 @@ class Map(View):
             'activefor':country,
             'graph_data':graph_data,
             'options':options,
+            'top1':self.top4[0],
+            'top2':self.top4[1],
+            'top3':self.top4[2],
+            'top4':self.top4[3],
+            'rowdata1':self.rowdata1,
+            'rowdata2':self.rowdata2,
+            'rowdata3':self.rowdata3,
+            'rowdata4':self.rowdata4,
         }
         print(graph_data)
         return render(request,self.mytemplate,context)

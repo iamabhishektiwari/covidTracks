@@ -4,53 +4,24 @@
 India-Status
 {% endblock %}
 {% load mathfilters %}
+{% load static %}
 
 {% block content %}
-
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {
-    'packages':['geochart'],
-    // Note: you will need to get a mapsApiKey for your project.
-    // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-    'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
-  });
-      google.charts.setOnLoadCallback(drawVisualization);
-
-      google.load('visualization', '1', {'packages': ['geochart']});
-      google.setOnLoadCallback(drawVisualization);
-
-      function drawVisualization() {
-      var data = google.visualization.arrayToDataTable({{ retlist |safe}});
-
-      var opts = {
-      region: 'IN',
-      displayMode: 'regions',
-      resolution: 'provinces',
-      colorAxis: {colors: ['pink', 'red']}
-      };
-      var geochart = new google.visualization.GeoChart(
-        document.getElementById('visualization'));
-      geochart.draw(data, opts);
-      };
-
-
-
-</script>
-
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 <style media="screen">
 
-  #map {
-    overflow:hidden;
-    padding-bottom:56.25%;
-    position:relative;
-    height:0;
-  }
   .container-fluid{
     width: 97%;
     padding: 1%;
     margin: 1%;
     background-color: white;
+    border-radius: 10px;
+  }
+  .container-fx{
+    width: 97%;
+    padding: 1%;
+    margin: 1%;
+    background-color: lightgrey;
     border-radius: 10px;
   }
   .header-box{
@@ -83,65 +54,6 @@ India-Status
   vertical-align: middle;
 }
 
-.scroll-down {
-  opacity: 1;
-  -webkit-transition: all .5s ease-in 3s;
-  transition: all .5s ease-in 3s;
-}
-
-.scroll-down {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  margin-left: -16px;
-  display: block;
-  width: 32px;
-  height: 32px;
-  border: 2px solid white;
-  background-size: 14px auto;
-  border-radius: 50%;
-  z-index: 2;
-  -webkit-animation: bounce 2s infinite 2s;
-  animation: bounce 2s infinite 2s;
-  -webkit-transition: all .2s ease-in;
-  transition: all .2s ease-in;
-  transform: scale(1)
-}
-
-.scroll-down:before {
-    position: absolute;
-    top: calc(50% - 8px);
-    left: calc(50% - 6px);
-    transform: rotate(-45deg);
-    display: block;
-    width: 12px;
-    height: 12px;
-    content: "";
-    border: 10px solid red;
-    border-width: 0px 0 4px 4px;
-}
-
-@keyframes bounce {
-  0%,
-  100%,
-  20%,
-  50%,
-  80% {
-    -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
-    transform: translateY(0);
-  }
-  40% {
-    -webkit-transform: translateY(-10px);
-    -ms-transform: translateY(-10px);
-    transform: translateY(-10px);
-  }
-  60% {
-    -webkit-transform: translateY(-5px);
-    -ms-transform: translateY(-5px);
-    transform: translateY(-5px);
-  }
-}
 .small-width{
   margin-left:5%;
   padding-left:5%;
@@ -162,63 +74,83 @@ a{
 .pdd3{
   margin-left:90%;
 }
+.txt{
+  color:black;
+}
+
+.padding_extra{
+  padding-top:1%;
+  margin-top:1%;
+}
 </style>
 
 
-<div class="container-fluid header-box">
-  <div class="row">
-    <div class="col-md-8">
-     <h4>Coronavirus Outbreak in India</h4>
 
+<div class="container-fx gedf-wrapper">
 
-
-       <button class="btn btn-outline-warning btn-sm">
-         <div class="h7 "> Confirmed</div>
-         <div class="h7 ">{{ totalconfirmed }}</div>
-       </button>
-
-
-       <button class="btn btn-outline-success btn-sm">
-         <div class="h7 "> Recovered</div>
-         <div class="h7 ">{{ totalrecovered }}</div>
-       </button>
-
-       <button class="btn btn-outline-danger btn-sm">
-         <div class="h7 "> Deaths</div>
-         <div class="h7 ">{{ totaldeaths }}</div>
-       </button>
-
-    </div>
-  </div>
-</div>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-9">
-      <div id="visualization"></div>
-    </div>
-    <div class="col-sm my-fixed-scrollbar">
-
-
-        {% for state in states %}
-
-        {% if state.totalconfirmed > 0 %}
-
-            <button name="named" value="{{ state.name }}" class="btn btn-light btn-sp text-left">
-              {{ state.name }}
-              <span class="space">  </span>
-              <span class="btn btn-outline-danger">{{state.totalconfirmed}}</span>
-            </button>
-          {% endif %}
-
-          {% endfor %}
-    </div>
-  </div>
-</div>
-
-
-<div class="container-fluid">
   <!--- world table-->
+  <div class="row">
+    <!--- world table-->
+    <div class="col-md-3">
 
+
+      <div class="card bg-dark mb-3" style="max-width: 18rem;">
+        <div class="card-header">Daily counter | India <br> updated at - {{ nongov_lastupdate}}</div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item list-group-item-warning">
+                  <div class="h6">Total Confirmed Cases</div>
+                  <div class="h4"> <strong>{{ nongov_totalconfirmed}} </strong></div>
+              </li>
+              <li class="list-group-item list-group-item-primary">
+                  <div class="h6">Total Active</div>
+                  <div class="h4"><strong> {{ nongov_active }} </strong></div>
+              </li>
+              <li class="list-group-item list-group-item-success">
+                  <div class="h6">Total Recovered</div>
+                  <div class="h4"><strong>{{ nongov_totalrecovered }} </strong></div>
+              </li>
+              <li class="list-group-item danger">
+                  <div class="h6">Total Deaths</div>
+                  <div class="h4"><strong> {{ nongov_totaldeaths }} </strong></div>
+              </li>
+
+              <li class="list-group-item list-group-item-danger">
+                  <div class="h6"> <b>+</b></div>
+                  <div class="h4"><strong> {{ nongov_deltaconfirmed }} </strong></div>
+              </li>
+
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="card bg-dark mb-3 txt" style="max-width: 18rem;">
+        <div class="card-body">
+          <div class="progress">
+            <div class="progress-bar bg-success"
+                 role="progressbar"
+                 style="width: {{ totalrecovered|div:totalconfirmed|mul:100|floatformat:2 }}%"
+                 aria-valuenow="5"
+                 aria-valuemin="0"
+                 aria-valuemax="100"></div>
+          </div>
+
+          <label for="">Recovery Rate | {{ totalrecovered|div:totalconfirmed|mul:100|floatformat:2 }}% </label>
+
+          <div class="progress mortality">
+            <div class="progress-bar bg-danger"
+                 role="progressbar"
+                 style="width: {{ totaldeaths|div:totalconfirmed|mul:100|floatformat:2 }}%"
+                 aria-valuenow="100"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+               </div>
+          </div>
+          <label for="">Mortality Rate | {{ totaldeaths|div:totalconfirmed|mul:100|floatformat:2 }}%</label>
+        </div>
+      </div>
+      </div>
     <div class="col-md-9 gedf-main">
         <!--- \\\\\\\Post-->
         <div class="card gedf-card bg-color">
@@ -229,19 +161,19 @@ a{
                          <div class="h5 m-0">@India</div>
                      </div>
                      <div class="ml-2">
-                       <button class="btn btn-outline-warning btn-sm">
+                       <button class="btn btn-outline-secondary btn-sm yellow">
                          <div class="h7 "> Confirmed</div>
                          <div class="h7 ">{{ totalconfirmed }}</div>
                        </button>
                      </div>
                      <div class="ml-2">
-                       <button class="btn btn-outline-success btn-sm">
+                       <button class="btn btn-outline-secondary btn-sm green">
                          <div class="h7 "> Recovered</div>
                          <div class="h7 ">{{ totalrecovered }}</div>
                        </button>
                      </div>
                      <div class="ml-2">
-                       <button class="btn btn-outline-danger btn-sm">
+                       <button class="btn btn-outline-secondary btn-sm red">
                          <div class="h7 "> Deaths</div>
                          <div class="h7 ">{{ totaldeaths }}</div>
                        </button>
@@ -249,10 +181,11 @@ a{
                  </div>
              </div>
          </div>
+
          <div class="card-body">
-           <div class="table-wrapper-scroll-y my-custom-scrollbar">
-              <table class="table table-sm table-condensed table-hover">
-                
+           <div class="table-wrapper-scroll-y my-custom-scrollbar-1">
+              <table class="table table-dark table-sm table-condensed table-hover">
+
                 <thead>
                   <tr>
                     <th scope="col">Region</th>
@@ -275,262 +208,134 @@ a{
               </table>
               </div>
           </div>
+          <b> &nbsp As Per Ministry of Health and Family Welfare,Government ministry | {{ record_update_time }}</b>
         </div>
     </div>
 
-</div>
-<div class="container-fluid" id="helpline">
-  <h1>Helpline</h1>
-  <h4>Ministry of Health & Family Welfare has provided these helpline numbers of States & Union Territories (UTs).</h4>
-  <div class="space">
-    <br>
-  </div>
-  <div class="container">
+    <!-- State Data -->
 
-    <h4> National Helpline Number </h4> <b><h3> 1075  |  1800-112-545 </h3></b>
-    <h4> Central Helpline Number </h4> <b><h3> +91-11-23978043  |  +91-11-23978046 </h3></b>
-    <h4> Central Helpline Email </h4> <b><h3> ncov2019@gmail.com </h3></b>
+{% for statek,dist in StateDistrict.items %}
 
-  </div>
+    <div class="col-md-3 padding_extra">
 
-  <div class="container-fluid small-width">
-  <table class="table table-sm table-condensed table-hover table-bordered table-striped">
-    <thead>
-      <tr>
-        <th scope="col">State/Union Territory</th>
-        <th scope="col">HelpLine number</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for state,contact in phoneno.items %}
-      <tr>
-        <td>{{ state }}</td>
-        <td>{{ contact }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  </div>
-</div>
 
-<div class="container-fluid" id="testcenter">
-  <h1>Test Centers</h1>
-  <h4> Test Centres across the Country </h4>
-  <div class="space">
-    <br>
-  </div>
-  <div class="container">
 
-    <ul class="list-group">
-      <h4>  Andhra Pradesh  </h4>
-      <h5>
-        <li> Sri Venkateswara Institute of Medical Sciences in Tirupati </li>
-        <li> GMC, Anantapur </li>
-        <li> Siddhartha Medical College, Vijayawada </li>
-        <li> Ranagaraya Medical College, Kakinada </li>
-      </h5>
-      <hr>
-      <h4> Andaman and Nicobar</h4>
-      <h5>
-        <li>Regional Medical Research Centre, Port Blair</li>
-      </h5>
-      <hr>
-      <h4>Assam</h4>
-      <h5>
-        <li>Gauhati Medical College, Guwahati</li>
-        <li>Regional Medical Research Centre, Dibrugarh</li>
-        <li>Silchar Medical College, Silchar</li>
-        <li>Jorhat Medical College, Jorhat</li>
-      </h5>
-      <hr>
+      <div class="card bg-dark mb-3 txt" style="max-width: 18rem;">
+        <div class="card-body">
+          <div class="progress">
+            <div class="progress-bar bg-success"
+                 role="progressbar"
+                 style="width: {{ statek.recovered|div:statek.confirmed|mul:100|floatformat:2 }}%"
+                 aria-valuenow="5"
+                 aria-valuemin="0"
+                 aria-valuemax="100"></div>
+          </div>
 
-      <h4>Bihar</h4>
-      <h5>
-        <li>Rajendra Memorial Research Institute of Medical Sciences, Patna</li>
-      </h5>
-      <hr>
+          <label for="">Recovery Rate | {{ statek.recovered|div:statek.confirmed|mul:100|floatformat:2 }}% </label>
 
-      <h4>Chandigarh</h4>
-      <h5>
-        <li>Post Graduate Institute of Medical Education & Research</li>
-      </h5>
-      <hr>
+          <div class="progress mortality">
+            <div class="progress-bar bg-danger"
+                 role="progressbar"
+                 style="width: {{ statek.deaths|div:statek.confirmed|mul:100|floatformat:2 }}%"
+                 aria-valuenow="100"
+                 aria-valuemin="0"
+                 aria-valuemax="100">
+               </div>
+          </div>
+          <label for="">Mortality Rate | {{ statek.deaths|div:statek.confirmed|mul:100|floatformat:2 }}%</label>
+        </div>
+      </div>
+      </div>
+    <div class="col-md-9 gedf-main padding_extra">
+        <!--- \\\\\\\Post-->
+        <div class="card gedf-card bg-color">
+          <div class="card-header bg-dark">
+             <div class="d-flex justify-content-between align-items-center">
+                 <div class="d-flex justify-content-between align-items-center">
+                     <div class="ml-2">
+                         <div class="h5 m-0">{{ statek.name }}</div>
+                     </div>
+                     &nbsp &nbsp
+                      &nbsp &nbsp
+                      &nbsp &nbsp
+                     <div class="ml-2">
+                       <button class="btn btn-outline-secondary btn-sm yellow">
+                         <div class="h7 "> Confirmed</div>
+                         <div class="h7 ">{{ statek.confirmed }}</div>
+                       </button>
+                     </div>
+                     &nbsp &nbsp
+                     <div class="ml-2">
+                       <button class="btn btn-outline-secondary btn-sm green">
+                         <div class="h7 "> Recovered</div>
+                         <div class="h7 ">{{ statek.recovered }}</div>
+                       </button>
+                     </div>
+                     &nbsp &nbsp
+                     <div class="ml-2">
+                       <button class="btn btn-outline-secondary btn-sm red">
+                         <div class="h7 "> Deaths</div>
+                         <div class="h7 ">{{ statek.deaths }}</div>
+                       </button>
+                     </div>
+                     <div class="ml-2">
+                       <button class="btn btn-outline-secondary btn-sm">
+                         <div class="h7 "> Last-update</div>
+                         <div class="h7 ">{{ statek.lastupdate }}</div>
+                       </button>
+                     </div>
+                     &nbsp &nbsp
+                      &nbsp &nbsp
+                      &nbsp &nbsp
+                       &nbsp &nbsp
+                       &nbsp &nbsp
+                        &nbsp &nbsp
+                     <div class="ml-2">
+                       {% if statek.district_present %}
+                       <button class="btn btn-outline-light btn-sm" type="button" data-toggle="collapse" data-target="#{{statek.statecode |safe}}" aria-expanded="false" aria-controls="collapseExample"">
 
-      <h4>Chhattisgarh</h4>
-      <h5>
-        <li>AIIMS, Raipur</li>
-      </h5>
-      <hr>
+                          Table &nbsp <i class="fa fa-arrow-down" aria-hidden="true"></i>
 
-      <h4>Delhi</h4>
-      <h5>
-        <li>AIIMS</li>
-      </h5>
-      <hr>
+                       </button>
+                       {% endif %}
+                     </div>
+                 </div>
+             </div>
+         </div>
+      <div class="collapse" id="{{statek.statecode}}">
+         <div class="card-body">
+           <div class="table-wrapper-scroll-y my-custom-scrollbar-1">
+              <table class="table table-dark table-sm table-condensed table-hover">
 
-      <h4>Delhi</h4>
-      <h5>
-        <li>AIIMS</li>
-      </h5>
-      <hr>
+                <thead>
+                  <tr>
+                    <th scope="col">District</th>
+                    <th scope="col">Confirmed Cases</th>
+                  </tr>
+                </thead>
 
-      <h4>Gujarat</h4>
-      <h5>
-        <li>BJ Medical College, Ahmedabad</li>
-        <li>M P Shah Government Medical College, Jamnagar</li>
-      </h5>
-      <hr>
-
-      <h4>Haryana</h4>
-      <h5>
-        <li>Pt B D Sharma Post Graduate Institute of Medical Sciences, Rohtak</li>
-        <li>BPS Government Medical College, Sonipat</li>
-      </h5>
-      <hr>
-
-      <h4>Himachal Pradesh</h4>
-      <h5>
-        <li>Indira Gandhi Medical College, Shimla</li>
-        <li>Dr Rajendra Prasad Government Medical College, Kangra, Tanda</li>
-      </h5>
-      <hr>
-
-      <h4>Jammu-Kashmir</h4>
-      <h5>
-        <li>Sher-I-Kashmir Institute of Medical Sciences, Srinagar</li>
-        <li>Government Medical College, Jammu</li>
-        <li>Government Medical College, Srinagar</li>
-      </h5>
-      <hr>
-
-      <h4>Jharkhand</h4>
-      <h5>
-        <li>MGM Medical College, Jamshedpur</li>
-      </h5>
-      <hr>
-
-      <h4>Karnataka</h4>
-      <h5>
-        <li>Bangalore Medical College & Research Institute, Bengaluru</li>
-        <li>National Institute of Virology Field Unit, Bengaluru</li>
-        <li>Mysore Medical College & Research Institute, Mysore</li>
-        <li>Hassan Institute of Medical Sciences, Hassan</li>
-        <li>Shimoga Institute of Medical Sciences, Shivamoga</li>
-      </h5>
-      <hr>
-
-      <h4>Kerala</h4>
-      <h5>
-        <li>National Institute of Virology Field, Kerala Unit</li>
-        <li>Government Medical College, Thriuvananthapuram</li>
-        <li>Government Medical College, Kozhikhode</li>
-        <li>Government Medical College, Thrissur</li>
-      </h5>
-      <hr>
-
-      <h4>Madhya Pradesh</h4>
-      <h5>
-        <li>AIIMS, Bhopal</li>
-        <li>National Institute of Research in Tribal Health (NIRTH), Jabalpur</li>
-      </h5>
-      <hr>
-
-      <h4>Maharashtra</h4>
-      <h5>
-        <li>Indira Gandhi Government Medical College, Nagpur</li>
-        <li>Kasturba Hospital for Infectious Diseases, Mumbai</li>
-        <li>NIV Mumbai Unit</li>
-      </h5>
-      <hr>
-
-      <h4>Manipur</h4>
-      <h5>
-        <li>JN Institute of Medical Sciences Hospital, Imphal</li>
-        <li>Regional Institute of Medical Science, Imphal</li>
-      </h5>
-      <hr>
-
-      <h4>Meghalaya</h4>
-      <h5>
-        <li>North Eastern Indira Gandhi Institute of Health and Medical Sciences, Shillong</li>
-      </h5>
-      <hr>
-
-      <h4>Odisha</h4>
-      <h5>
-        <li>Regional Medical Research Centre, Bhubaneswar</li>
-      </h5>
-      <hr>
-
-      <h4>Puducherry</h4>
-      <h5>
-        <li>Jawaharlal Institute of Postgraduate Medical Education & Research, Puducherry</li>
-      </h5>
-      <hr>
-
-      <h4>Punjab</h4>
-      <h5>
-        <li>Government Medical College, Patiala</li>
-        <li>Government Medical College, Amritsar</li>
-      </h5>
-      <hr>
-
-      <h4>Rajasthan</h4>
-      <h5>
-        <li>Sawai Man Singh Hospital, Jaipur</li>
-        <li>Dr S N Medical College, Jodhpur</li>
-        <li>Jhalawar Medical College, Jhalawar</li>
-        <li>SP Medical College, Bikaner</li>
-        <li>RNT Medical college, Udaipur</li>
-      </h5>
-      <hr>
-      <h4>Tamil Nadu</h4>
-      <h5>
-        <li>King’s Institute of Preventive Medicine & Research, Chennai</li>
-        <li>Government Medical College, Theni</li>
-        <li>Tirunelveli Medical College, Tirunelveli</li>
-        <li>Government Medical College, Thiruvarur</li>
-      </h5>
-      <hr>
-
-      <h4>Telangana</h4>
-      <h5>
-        <li>Gandhi Medical College, Secunderabad</li>
-        <li>Osmania Medical college, Hyderabad</li>
-      </h5>
-      <hr>
-
-      <h4>Tripura</h4>
-      <h5>
-        <li>Government Medical College, Agartala</li>
-      </h5>
-      <hr>
-
-      <h4>Uttar Pradesh</h4>
-      <h5>
-        <li>King George Medical University, Lucknow</li>
-        <li>Institute of Medical Sciences, Banaras Hindu University, Varanasi</li>
-        <li>Jawaharlal Nehru Medical College, Aligarh</li>
-      </h5>
-      <hr>
-
-      <h4>Uttarakhand</h4>
-      <h5>
-        <li>Government Medical College, Haldwani</li>
-      </h5>
-      <hr>
-
-      <h4>West Bengal</h4>
-      <h5>
-        <li>National Institute of Cholera and Enteric Diseases, Kolkata</li>
-        <li>IPGMER, Kolkata</li>
-      </h5>
-      <hr>
-
-    </ul>
-
+                <tbody>
+                  {% for dis in dist %}
+                  <tr>
+                    <td>{{ dis.name }}</td>
+                    <td>{{ dis.confirmed }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              </div>
+          </div>
+          <b> &nbsp Updated from various news source | updated at - {{ statek.lastupdate }}</b>
+        </div>
+        </div>
+    </div>
+{% endfor %}
+    <!-- State Data -->
   </div>
 </div>
+
+
+
 
 
 {% endblock %}

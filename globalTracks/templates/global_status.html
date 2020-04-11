@@ -6,260 +6,237 @@ Data-Plot
 
 {% block content %}
 
+  <style media="screen">
+    table{
+      background-color:white;
+    }
 
-<style media="screen">
-  table{
-    background-color:white;
-  }
-  .card-body{
-    padding-top:20px;
-    margin-top:20px;
-    background-color:lightgrey;
-  }
-</style>
+    #line_top_x{
+      background-color:white;
+    }
+    .pd_dow{
+      margin-bottom:7%;
+      padding-bottom:7%;
+    }
+    .pdd{
+      margin-top:6%;
+      padding-top:6%;
+    }
+    .txt{
+      color:black;
+    }
+    .pads{
+      padding:1%;
+      margin:1%;
+    }
+  </style>
 
-<div class="container-fluid gedf-wrapper">
-  <div class="row">
-      <div class="col-sm my-fixed-scrollbar">
-          <div class="card">
-              <div class="card-body">
-                  <div class="h5">Latest News</div>
-                  <div class="h7 text-muted">Articles : Regarding CoronaVirus</div>
-                  <div class="h7">
-                    <!-- Can add something when required -->
+  <div class="container-fluid gedf-wrapper">
+    <div class="row">
+      <!--- world table-->
+      <div class="col-md-3">
+
+
+        <div class="card bg-dark mb-3" style="max-width: 18rem;">
+          <div class="card-header">Daily counter</div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-warning">
+                    <div class="h6">Total Confirmed Cases</div>
+                    <div class="h4"> <strong>{{ totalconfirmed}} </strong></div>
+                </li>
+                <li class="list-group-item list-group-item-success">
+                    <div class="h6">Total Recovered</div>
+                    <div class="h4"><strong>{{ totalrecovered }} </strong></div>
+                </li>
+                <li class="list-group-item list-group-item-danger">
+                    <div class="h6">Total Deaths</div>
+                    <div class="h4"><strong> {{ totaldeaths }} </strong></div>
+                </li>
+
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="card bg-dark mb-3 txt" style="max-width: 18rem;">
+          <div class="card-body">
+            <div class="progress">
+              <div class="progress-bar bg-success"
+                   role="progressbar"
+                   style="width: {{ totalrecovered|div:totalconfirmed|mul:100|floatformat:2 }}%"
+                   aria-valuenow="5"
+                   aria-valuemin="0"
+                   aria-valuemax="100"></div>
+            </div>
+
+            <label for="">Recovery Rate | {{ totalrecovered|div:totalconfirmed|mul:100|floatformat:2 }}% </label>
+
+            <div class="progress mortality">
+              <div class="progress-bar bg-danger"
+                   role="progressbar"
+                   style="width: {{ totaldeaths|div:totalconfirmed|mul:100|floatformat:2 }}%"
+                   aria-valuenow="100"
+                   aria-valuemin="0"
+                   aria-valuemax="100">
+                 </div>
+            </div>
+            <label for="">Mortality Rate | {{ totaldeaths|div:totalconfirmed|mul:100|floatformat:2 }}%</label>
+          </div>
+        </div>
+
+
+      </div>
+        <div class="col-md-9 gedf-main ">
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card bg-color">
+              <div class="card-header bg-dark">
+                 <div class="d-flex justify-content-between align-items-center">
+                     <div class="d-flex justify-content-between align-items-center">
+                         <div class="ml-2">
+                             <div class="h5 m-0">@Global</div>
+                         </div>
+                         <div class="ml-4">
+                           <button class="btn btn-outline-secondary btn-sm yellow">
+                             <div class="h7 "> Confirmed</div>
+                             <div class="h7 ">{{ totalconfirmed }}</div>
+                           </button>
+                         </div>
+                         <div class="ml-4">
+                           <button class="btn btn-outline-secondary btn-sm green">
+                             <div class="h7 "> Recovered</div>
+                             <div class="h7 "> {{ totalrecovered }}</div>
+                           </button>
+                         </div>
+                         <div class="ml-4">
+                           <button class="btn btn-outline-secondary btn-sm red">
+                             <div class="h7 "> Deaths</div>
+                             <div class="h7 ">{{ totaldeaths }}</div>
+                           </button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <div class="card-body">
+               <div class="table-wrapper-scroll-y my-custom-scrollbar-1">
+                  <table class="table table-dark table-sm table-condensed table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Region</th>
+                        <th scope="col">Confirmed Cases</th>
+                        <th scope="col">Recovered Cases</th>
+                        <th scope="col">Deaths</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for region in regions %}
+                      <tr>
+                        <td>{{ region.name }}</td>
+                        <td>{{ region.totalconfirmed }}</td>
+                        <td>{{ region.totalrecovered }}</td>
+                        <td>{{ region.totaldeaths }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
                   </div>
               </div>
-              <ul class="list-group list-group-flush">
-
-                  <li class="list-group-item">
-                      <div class="h6 text-muted">  </div>
-                      <div class="h5"> </div>
-                      <div><a target="_blank" href="#">Read more</a></div>
-                  </li>
-
-              </ul>
-          </div>
-      </div>
-
-
-
-      <div class="col-md-7 gedf-main-fixed">
-          <!--- \\\\\\\Post-->
-          <div class="card gedf-card bg-color">
-            <div class="card-header bg-dark">
-               <div class="d-flex justify-content-between align-items-center">
-                   <div class="d-flex justify-content-between align-items-center">
-                       <div class="ml-2">
-                           <div class="h4 m-0">Coronavirus Outbreak</div>
-                       </div>
-                        <!-- insert here for different maps -->
-                   </div>
-               </div>
-
-           </div>
-           <div class="card-body my-fixed-scrollbar">
-             <div id="linechart_material"></div>
-            </div>
-          </div>
-      </div>
-
-
-      <div class="col col-lg-2">
-          <div class="card">
-
-              <ul class="list-group list-group-flush">
-                  <li class="list-group-item warning">
-                      <div class="h6">Total Confirmed Cases</div>
-                      <div class="h4"> <strong>{{ totalconfirmed}} </strong></div>
-                  </li>
-                  <li class="list-group-item success">
-                      <div class="h6">Total Recovered</div>
-                      <div class="h4"><strong>{{ totalrecovered }} </strong></div>
-                  </li>
-                  <li class="list-group-item danger">
-                      <div class="h6">Total Deaths</div>
-                      <div class="h4"><strong> {{ totaldeaths }} </strong></div>
-                  </li>
-
-              </ul>
-          </div>
-      </div>
-
-
-    <!--- world table-->
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-body">
-              <div class="progress">
-                <div class="progress-bar bg-success"
-                     role="progressbar"
-                     style="width: {{ totalrecovered|div:totalconfirmed|mul:100|floatformat:2 }}%"
-                     aria-valuenow="5"
-                     aria-valuemin="0"
-                     aria-valuemax="100"></div>
-              </div>
-
-              <label for="">Recovery Rate | {{ totalrecovered|div:totalconfirmed|mul:100|floatformat:2 }}% </label>
-
-              <div class="progress mortality">
-                <div class="progress-bar bg-danger"
-                     role="progressbar"
-                     style="width: {{ totaldeaths|div:totalconfirmed|mul:100|floatformat:2 }}%"
-                     aria-valuenow="100"
-                     aria-valuemin="0"
-                     aria-valuemax="100">
-                   </div>
-              </div>
-              <label for="">Mortality Rate | {{ totaldeaths|div:totalconfirmed|mul:100|floatformat:2 }}%</label>
             </div>
         </div>
-    </div>
-      <div class="col-md-9 gedf-main ">
-          <!--- \\\\\\\Post-->
-          <div class="card gedf-card bg-color">
-            <div class="card-header bg-dark">
-               <div class="d-flex justify-content-between align-items-center">
-                   <div class="d-flex justify-content-between align-items-center">
-                       <div class="ml-2">
-                           <div class="h5 m-0">@Global</div>
-                       </div>
-                       <div class="ml-4">
-                         <button class="btn btn-outline-warning btn-sm">
-                           <div class="h7 "> Confirmed</div>
-                           <div class="h7 ">{{ totalconfirmed }}</div>
-                         </button>
-                       </div>
-                       <div class="ml-4">
-                         <button class="btn btn-outline-success btn-sm">
+
+        <!--- world table-->
+
+
+        {% for region,subregions in subregionlist.items %}
+        <!--- country wise table-->
+        <div class="col-md-3">
+            <div class="card bg-dark txt">
+                <div class="card-body">
+                  <div class="progress">
+                    <div class="progress-bar bg-success"
+                         role="progressbar"
+                         style="width: {{ region.totalrecovered|div:region.totalconfirmed|mul:100|floatformat:2 }}%"
+                         aria-valuenow="3"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                    </div>
+                  </div>
+                  <label for="">Recovery Rate | {{ region.totalrecovered|div:region.totalconfirmed|mul:100|floatformat:2 }}%</label>
+
+                  <div class="progress mortality">
+                    <div class="progress-bar bg-danger"
+                         role="progressbar"
+                         style="width: {{ region.totaldeaths|div:region.totalconfirmed|mul:100|floatformat:2 }}%"
+                         aria-valuenow="10"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                    </div>
+                  </div>
+                  <label for="">Mortality Rate | {{ region.totaldeaths|div:region.totalconfirmed|mul:100|floatformat:2 }}%</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 gedf-main ">
+            <!--- \\\\\\\Post-->
+            <div class="card gedf-card bg-color">
+              <div class="card-header bg-dark">
+                 <div class="d-flex justify-content-between align-items-center">
+                     <div class="d-flex justify-content-between align-items-center">
+                         <div class="ml-2">
+                             <div class="h5 m-0">@{{ region.name }}</div>
+                         </div>
+                         <div class="ml-4">
+                           <button class="btn btn-outline-secondary btn-sm yellow">
+                             <div class="h7 "> Confirmed</div>
+                             <div class="h7 ">{{ region.totalconfirmed }}</div>
+                          </button>
+                         </div>
+                         <div class="ml-4">
+                           <button class="btn btn-outline-secondary btn-sm green">
                            <div class="h7 "> Recovered</div>
-                           <div class="h7 "> {{ totalrecovered }}</div>
-                         </button>
-                       </div>
-                       <div class="ml-4">
-                         <button class="btn btn-outline-danger btn-sm">
+                           <div class="h7 ">{{ region.totalrecovered }}</div>
+                           </button>
+                         </div>
+                         <div class="ml-4">
+                           <button class="btn btn-outline-secondary btn-sm red">
                            <div class="h7 "> Deaths</div>
-                           <div class="h7 ">{{ totaldeaths }}</div>
-                         </button>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="card-body">
-             <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table table-sm table-condensed table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">Region</th>
-                      <th scope="col">Confirmed Cases</th>
-                      <th scope="col">Recovered Cases</th>
-                      <th scope="col">Deaths</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for region in regions %}
-                    <tr>
-                      <td>{{ region.name }}</td>
-                      <td>{{ region.totalconfirmed }}</td>
-                      <td>{{ region.totalrecovered }}</td>
-                      <td>{{ region.totaldeaths }}</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                </div>
-            </div>
-          </div>
-      </div>
-
-      <!--- world table-->
-      {% for region,subregions in subregionlist.items %}
-      <!--- country wise table-->
-      <div class="col-md-3">
-          <div class="card">
-              <div class="card-body">
-                <div class="progress">
-                  <div class="progress-bar bg-success"
-                       role="progressbar"
-                       style="width: {{ region.totalrecovered|div:region.totalconfirmed|mul:100|floatformat:2 }}%"
-                       aria-valuenow="3"
-                       aria-valuemin="0"
-                       aria-valuemax="100">
+                           <div class="h7 ">{{ region.totaldeaths }}</div>
+                           </button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <div class="card-body">
+               <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                  <table class="table table-dark table-sm table-condensed">
+                    <thead>
+                      <tr>
+                        <th scope="col">Province</th>
+                        <th scope="col">Confirmed Cases</th>
+                        <th scope="col">Recovered Cases</th>
+                        <th scope="col">Deaths</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for sub in subregions %}
+                      <tr>
+                        <td>{{ sub.name }}</td>
+                        <td>{{ sub.totalconfirmed }}</td>
+                        <td>{{ sub.totalrecovered }}</td>
+                        <td>{{ sub.totaldeaths }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
                   </div>
-                </div>
-                <label for="">Recovery Rate | {{ region.totalrecovered|div:region.totalconfirmed|mul:100|floatformat:2 }}%</label>
-
-                <div class="progress mortality">
-                  <div class="progress-bar bg-danger"
-                       role="progressbar"
-                       style="width: {{ region.totaldeaths|div:region.totalconfirmed|mul:100|floatformat:2 }}%"
-                       aria-valuenow="10"
-                       aria-valuemin="0"
-                       aria-valuemax="100">
-                  </div>
-                </div>
-                <label for="">Mortality Rate | {{ region.totaldeaths|div:region.totalconfirmed|mul:100|floatformat:2 }}%</label>
               </div>
-          </div>
-      </div>
-      <div class="col-md-9 gedf-main ">
-          <!--- \\\\\\\Post-->
-          <div class="card gedf-card bg-color">
-            <div class="card-header bg-dark">
-               <div class="d-flex justify-content-between align-items-center">
-                   <div class="d-flex justify-content-between align-items-center">
-                       <div class="ml-2">
-                           <div class="h5 m-0">@{{ region.name }}</div>
-                       </div>
-                       <div class="ml-4">
-                         <button class="btn btn-outline-warning btn-sm">
-                           <div class="h7 "> Confirmed</div>
-                           <div class="h7 ">{{ region.totalconfirmed }}</div>
-                        </button>
-                       </div>
-                       <div class="ml-4">
-                         <button class="btn btn-outline-success btn-sm">
-                         <div class="h7 "> Recovered</div>
-                         <div class="h7 ">{{ region.totalrecovered }}</div>
-                         </button>
-                       </div>
-                       <div class="ml-4">
-                         <button class="btn btn-outline-danger btn-sm">
-                         <div class="h7 "> Deaths</div>
-                         <div class="h7 ">{{ region.totaldeaths }}</div>
-                         </button>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="card-body">
-             <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table table-sm table-condensed">
-                  <thead>
-                    <tr>
-                      <th scope="col">Province</th>
-                      <th scope="col">Confirmed Cases</th>
-                      <th scope="col">Recovered Cases</th>
-                      <th scope="col">Deaths</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for sub in subregions %}
-                    <tr>
-                      <td>{{ sub.name }}</td>
-                      <td>{{ sub.totalconfirmed }}</td>
-                      <td>{{ sub.totalrecovered }}</td>
-                      <td>{{ sub.totaldeaths }}</td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                </div>
             </div>
-          </div>
-      </div>
-      {% endfor %}
+        </div>
+        {% endfor %}
 
-  </div>
-  </div>
 
-{% endblock %}
+
+    </div>
+    </div>
+
+  {% endblock %}

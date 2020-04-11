@@ -1,95 +1,96 @@
 from django.shortcuts import render
 from django.views.generic import View
 import requests
-from .models import States, ImpParam
+from .models import States, ImpParam, State_k, District
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 import time
 import json
 from getNews import NewsFromApi
+from .updateData import fetchData, findDataSample2
 # Create your views here.
 
 
 
+class DataUpdate(View):
+    mytemplate = 'update_data_status.html'
+    unsupported = 'Unsupported operation'
+    def get(self, request):
+
+        fetchData()
+        findDataSample2()
+
+        context = {
+            'message':"Success",
+        }
+        return render(request,self.mytemplate,context)
+
+    def post(self, request):
+        return HttpResponse(self.unsupported)
+
+
+class Helpline(View):
+    stateinfo = {}
+    with open('helper_data/stateinfo.json', 'r') as openfile:
+        stateinfo = json.load(openfile)
+    mytemplate = 'helpline.html'
+    unsupported = 'Unsupported operation'
+    def get(self, request):
+
+        context = {
+            'phoneno':self.stateinfo['phoneno'],
+        }
+        return render(request,self.mytemplate,context)
+
+    def post(self, request):
+        return HttpResponse(self.unsupported)
 
 
 
 
+class Map(View):
+    mytemplate = 'india_maps.html'
+    unsupported = 'Unsupported operation'
+    stateinfo = {}
+    with open('helper_data/stateinfo.json', 'r') as openfile:
+        stateinfo = json.load(openfile)
+    def get(self, request):
 
-def fetchData():
-    url = "https://covid19-india-data.herokuapp.com/getStateData"
-    page = requests.get(url).json()
-    data = page['data']
-    record_update_time = page['update-time']
-
-    totaldeaths = 0;
-    totalconfirmed = 0;
-    totalrecovered = 0;
-
-    for key in data:
-
-        try:
-            pk = States.objects.get(name=key)
-            pk = States.objects.get(name=key)
-            pk.totalconfirmed = data[key]['Confirmed Cases']
-            pk.totaldeaths = data[key]['Deaths']
-            pk.totalrecovered = data[key]['Cured/Discharged']
-            pk.save()
-        except Exception as e:
-            pk = States(name=key,
-                        totalconfirmed=int(data[key]['Confirmed Cases']),
-                        totaldeaths = int(data[key]['Deaths']),
-                        totalrecovered = int(data[key]['Cured/Discharged']),
-                        latitude=0,
-                        longitude=0);
-            pk.save()
-
-        totaldeaths = totaldeaths+int(data[key]['Deaths'])
-        totalconfirmed = totalconfirmed+int(data[key]['Confirmed Cases'])
-        totalrecovered = totalrecovered+int(data[key]['Cured/Discharged'])
+        totalconfirmed = ImpParam.objects.get(key='totalconfirmed').value
+        totalrecovered = ImpParam.objects.get(key='totalrecovered').value
+        totaldeaths = ImpParam.objects.get(key='totaldeaths').value
 
 
-        try:
-            rut = ImpParam.objects.get(key='record_update_time')
+        states = States.objects.all().order_by('-totalconfirmed')
+        retlist = [["State Code", "State", "Number"],];
 
-            param1 = ImpParam.objects.get(key='totaldeaths')
-            param2 = ImpParam.objects.get(key='totalconfirmed')
-            param3 = ImpParam.objects.get(key='totalrecovered')
+        for state in states:
+            state_code = self.stateinfo['statecode'][state.name]
+            State = state.name
+            number = state.totalconfirmed
 
-            rut.value = record_update_time
-            rut.save()
+            retlist.append([state_code,State,number])
 
-            param1.value = totaldeaths
-            param2.value = totalconfirmed
-            param3.value = totalrecovered
+        context = {
+            'states':states,
+            'retlist':retlist,
+            'totalconfirmed':totalconfirmed,
+            'totalrecovered':totalrecovered,
+            'totaldeaths':totaldeaths,
+        }
+        return render(request,self.mytemplate,context=context)
 
-            param1.save()
-            param2.save()
-            param3.save()
-
-        except Exception as e:
-
-            rut = ImpParam(key='record_update_time',value=record_update_time)
-            param1 = ImpParam(key='totaldeaths',value=totaldeaths)
-            param2 = ImpParam(key='totalconfirmed',value=totalconfirmed)
-            param3 = ImpParam(key='totalrecovered',value=totalrecovered)
-
-            rut.save()
-            param1.save()
-            param2.save()
-            param3.save()
-
+    def post(self, request):
+        return HttpResponse(self.unsupported)
 
 
 
 
 
 class India(View):
-    update_time = ImpParam.objects.get(key='update_time');
-    if(float(update_time.value)+3600 < time.time()):
-        update_time.value = time.time()
-        update_time.save()
-        fetchData()
+
+    record_update_time = ImpParam.objects.get(key='record_update_time').value
+    nongov_lastupdate = ImpParam.objects.get(key='nongov_lastupdate').value
     mytemplate = 'india_status.html'
     unsupported = 'Unsupported operation'
     stateinfo = {}
@@ -104,34 +105,39 @@ class India(View):
         # r = Region.objects.get(name='India')
         # subregions = SubRegion.objects.all().filter(region=r).order_by('-totalconfirmed')
         states = States.objects.all().order_by('-totalconfirmed')
-        retlist = [["State Code", "State", "Number"],];
 
-        for state in states:
-            state_code = self.stateinfo['statecode'][state.name]
-            State = state.name
-            number = state.totalconfirmed
+        StateDistrict = {}
 
-            retlist.append([state_code,State,number])
-        #
-        # totaldeaths    = Region.objects.get(name='India').totaldeaths
-        # totalrecovered = Region.objects.get(name='India').totalrecovered
-        # totalconfirmed = Region.objects.get(name='India').totalconfirmed
-        # chart_data = [['State', 'Total Confirmed', 'Recovered']]
-        # for rs in subregions:
-        #     if(rs.totalconfirmed>0):
-        #         chart_data.append([rs.name,rs.totalconfirmed,rs.totalrecovered])
-        #         ls = [self.statecode[rs.name],rs.name,rs.totalconfirmed]
-        #         retlist.append(ls)
-        #
-        #
-        #
+        statek = State_k.objects.all().filter(confirmed__gte=1).order_by('-confirmed')
+        for ss in statek:
+            dists = District.objects.all().filter(state=ss).order_by('-confirmed')
+            StateDistrict[ss] = dists
+
+
+
+        nongov_totalconfirmed = ImpParam.objects.get(key='nongov_totalconfirmed').value
+        nongov_totalrecovered = ImpParam.objects.get(key='nongov_totalrecovered').value
+        nongov_totaldeaths = ImpParam.objects.get(key='nongov_totaldeaths').value
+        nongov_active = ImpParam.objects.get(key='nongov_active').value
+        nongov_deltaconfirmed = ImpParam.objects.get(key='nongov_deltaconfirmed').value
+
+
+
+
         context = {
             'states':states,
-            'retlist':retlist,
             'totalconfirmed':totalconfirmed,
             'totalrecovered':totalrecovered,
             'totaldeaths':totaldeaths,
             'phoneno':self.stateinfo['phoneno'],
+            'StateDistrict':StateDistrict,
+            'record_update_time':self.record_update_time,
+            'nongov_totalconfirmed':nongov_totalconfirmed,
+            'nongov_totalrecovered':nongov_totalrecovered,
+            'nongov_totaldeaths':nongov_totaldeaths,
+            'nongov_active':nongov_active,
+            'nongov_deltaconfirmed':nongov_deltaconfirmed,
+            'nongov_lastupdate':self.nongov_lastupdate,
         }
         return render(request,self.mytemplate,context=context)
 

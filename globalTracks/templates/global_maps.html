@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% block title %}
+Map
+{% endblock %}
+{% load mathfilters %}
+
+{% block content %}
+
+    <style media="screen">
+
+      .container-fluid{
+        width: 97%;
+        padding: 1%;
+        margin: 1%;
+        background-color: white;
+        border-radius: 10px;
+      }
+      .header-box{
+        width: 80%;
+        height: 1%;
+        background-color: white;
+      }
+      .btn-sp{
+        border-radius: 15px;
+        margin: 10px;
+        width: 90%;
+
+      }
+
+      span{
+        height:30px;
+        width:auto;
+        float:right;
+      }
+
+      .my-fixed-scrollbar{
+        background-color:white;
+      }
+
+      p{
+      color: white;
+      font-family: arial;
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+
+
+
+
+    a{
+      color:red;
+    }
+    .pdd{
+      margin-left:10%;
+    }
+    .pdd2{
+      margin-left:50%;
+    }
+    .pdd3{
+      margin-left:90%;
+    }
+    </style>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {
+        'packages':['geochart'],
+        // Note: you will need to get a mapsApiKey for your project.
+        // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+        'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+      });
+      google.charts.setOnLoadCallback(drawRegionsMap);
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable({{ graph_data |safe }});
+
+        var options = {{ options | safe}}
+
+
+        var chart = new google.visualization.GeoChart(document.getElementById('visualization'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('number', 'Days');
+          data.addColumn('number', 'Confirmed');
+          data.addColumn('number','Recovered')
+          data.addColumn('number', 'Deaths');
+
+          data.addRows({{rowdata1}});
+          var options = {
+            hAxis: {
+              title: 'Days'
+            },
+            vAxis: {
+              title: 'Counts'
+            },
+            series: {
+                0: { color: '#43459d' },
+                1: { color: '#008000' },
+                2: { color: '#FF0000' },
+              }
+          };
+
+          var chart = new google.visualization.LineChart(document.getElementById('chart_div1'));
+
+          chart.draw(data, options);
+        }
+
+    </script>
+    <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('number', 'Days');
+          data.addColumn('number', 'Confirmed');
+          data.addColumn('number','Recovered')
+          data.addColumn('number', 'Deaths');
+
+          data.addRows({{rowdata2}});
+          var options = {
+            hAxis: {
+              title: 'Days'
+            },
+            vAxis: {
+              title: 'Counts'
+            },
+            series: {
+                0: { color: '#43459d' },
+                1: { color: '#008000' },
+                2: { color: '#FF0000' },
+              }
+          };
+
+          var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+
+          chart.draw(data, options);
+        }
+
+    </script>
+    <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('number', 'Days');
+          data.addColumn('number', 'Confirmed');
+          data.addColumn('number','Recovered')
+          data.addColumn('number', 'Deaths');
+
+          data.addRows({{rowdata3}});
+          var options = {
+            hAxis: {
+              title: 'Days'
+            },
+            vAxis: {
+              title: 'Counts'
+            },
+            series: {
+                0: { color: '#43459d' },
+                1: { color: '#008000' },
+                2: { color: '#FF0000' },
+              }
+          };
+
+          var chart = new google.visualization.LineChart(document.getElementById('chart_div3'));
+
+          chart.draw(data, options);
+        }
+
+    </script>
+    <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('number', 'Days');
+          data.addColumn('number', 'Confirmed');
+          data.addColumn('number','Recovered')
+          data.addColumn('number', 'Deaths');
+
+          data.addRows({{rowdata4}});
+          var options = {
+            hAxis: {
+              title: 'Days'
+            },
+            vAxis: {
+              title: 'Counts'
+            },
+            series: {
+                0: { color: '#43459d' },
+                1: { color: '#008000' },
+                2: { color: '#FF0000' },
+              }
+          };
+
+          var chart = new google.visualization.LineChart(document.getElementById('chart_div4'));
+
+          chart.draw(data, options);
+        }
+
+    </script>
+
+
+    <div class="container-fluid header-box">
+      <div class="row">
+        <div class="col-md-9">
+         <h3>Coronavirus Outbreak Global</h3>
+         <div class="text-muted">
+           (Larger dots represents more number of cases)
+         </div>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-9">
+            <div id="visualization"></div>
+        </div>
+        <div class="col-sm my-fixed-scrollbar">
+
+
+          <form method="post">
+          {% csrf_token %}
+          <button name="named" value="Global" class=
+                                  {% if activefor == "Global" %}
+                                   "btn btn-light btn-sp text-left active"
+                                  {% else %}
+                                  "btn btn-light btn-sp text-left"
+                                  {% endif %}>
+            Global
+            <span class="space">  </span>
+            <span class="btn btn-outline-danger">{{totalconfirmed}}</span>
+          </button>
+        </form>
+
+
+          {% for region in regions %}
+            <form method="post">
+              {% csrf_token %}
+
+
+              <button name="named" value="{{ region.name }}" class=
+                                        {% if activefor == region.name %}
+                                         "btn btn-light btn-sp text-left active"
+                                         {% else %}
+                                         "btn btn-light btn-sp text-left"
+                                         {% endif %}>
+                {{ region.name }}
+                <span class="space">  </span>
+                <span class="btn btn-outline-danger">{{region.totalconfirmed}}</span>
+              </button>
+
+            </form>
+            {% endfor %}
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+
+              <div class="col col-md-11">
+
+                <nav aria-label="breadcrumb" class="pads">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                    <h2>Top four affected Countries</h2>
+                  </li>
+                  </ol>
+                </nav>
+
+                  <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col mb-4">
+                      <div class="card">
+                        <div id="chart_div1" class="card-img-top" ></div>
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            {{ top1.name }}
+                            <span class="red"> {{ top1.totaldeaths }} &nbsp;</span>
+                            <span class="green"> {{ top1.totalrecovered}} &nbsp;</span>
+                            <span class="blue"> {{ top1.totalconfirmed }} &nbsp; </span>
+
+                          </h5>
+                          Death Rate -  {{ top1.totaldeaths|div:top1.totalconfirmed|mul:100|floatformat:2 }}%
+                          <br>
+                          Recovery Rate - {{ top1.totalrecovered|div:top1.totalconfirmed|mul:100|floatformat:2 }}%
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col mb-4">
+                      <div class="card">
+                        <div id="chart_div2" class="card-img-top" ></div>
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            {{ top2.name }}
+                            <span class="red"> {{ top2.totaldeaths }} &nbsp;</span>
+                            <span class="green"> {{ top2.totalrecovered}} &nbsp;</span>
+                            <span class="blue"> {{ top2.totalconfirmed }} &nbsp; </span>
+                          </h5>
+                          Death Rate -  {{ top2.totaldeaths|div:top2.totalconfirmed|mul:100|floatformat:2 }}%
+                          <br>
+                          Recovery Rate - {{ top2.totalrecovered|div:top2.totalconfirmed|mul:100|floatformat:2 }}%
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col mb-4">
+                      <div class="card">
+                        <div id="chart_div3" class="card-img-top" ></div>
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            {{ top3.name }}
+                            <span class="red"> {{ top3.totaldeaths }} &nbsp;</span>
+                            <span class="green"> {{ top3.totalrecovered}} &nbsp;</span>
+                            <span class="blue"> {{ top3.totalconfirmed }} &nbsp; </span>
+                            <br>
+                          </h5>
+                          Death Rate -  {{ top3.totaldeaths|div:top3.totalconfirmed|mul:100|floatformat:2 }}%
+                          <br>
+                          Recovery Rate - {{ top3.totalrecovered|div:top3.totalconfirmed|mul:100|floatformat:2 }}%
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col mb-4">
+                      <div class="card">
+                        <div id="chart_div4" class="card-img-top" ></div>
+                        <div class="card-body">
+                          <h5 class="card-title">
+                            {{ top4.name }}
+                            <span class="red"> {{ top4.totaldeaths }} &nbsp;</span>
+                            <span class="green"> {{ top4.totalrecovered}} &nbsp;</span>
+                            <span class="blue"> {{ top4.totalconfirmed }} &nbsp; </span>
+
+                          </h5>
+                          Death Rate -  {{ top4.totaldeaths|div:top4.totalconfirmed|mul:100|floatformat:2 }}%
+                          <br>
+                          Recovery Rate - {{ top4.totalrecovered|div:top4.totalconfirmed|mul:100|floatformat:2 }}%
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+              </div>
+      </div>
+
+
+
+
+{% endblock %}

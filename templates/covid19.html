@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+CoronaVirus
+{% endblock %}
+{% load mathfilters %}
+
+{% block content %}
+
+<style media="screen">
+  .container-fluid{
+    width: 97%;
+    padding: 1%;
+    margin: 1%;
+    background-color: white;
+    border-radius: 10px;
+  }
+</style>
+
+<!-- Header -->
+<header class="bg-secondary text-center py-5 mb-4">
+  <div class="container">
+    <h1 class="font-weight-light text-white">Coronavirus disease (COVID-19) Pandemic</h1>
+  </div>
+</header>
+
+<!-- Page Content -->
+<div class="container">
+  <div class="row">
+    <!-- Team Member 1 -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-0 shadow">
+        <img src="{% static 'img/covid19.jpg' %}" class="card-img-top" alt="...">
+      </div>
+    </div>
+    <!-- Team Member 2 -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-0 shadow">
+        <img src="{% static 'img/download.jpeg' %}" class="card-img-top" alt="...">
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-0 shadow">
+        <img src="{% static 'img/covid-1.jpeg' %}" class="card-img-top" alt="...">
+      </div>
+    </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-0 shadow">
+        <img src="{% static 'img/covid-2.jpeg' %}" class="card-img-top" alt="...">
+      </div>
+    </div>
+  <!-- /.row -->
+</div>
+</div>
+<div class="container-fluid">
+<h2>About Coronavirus</h2>
+<h6>Coronaviruses are an expanded family of viruses which specifically affects the respiratory tracts of birds and mammals ( including humans).
+
+They can cause common cold, pneumonia, bronchitis, Severe Acute Respiratory Syndrome (SARS) and COVID-19.
+They are transmitted between animals and people and can infect mice, dogs, rats, cats, turkeys, horses, pigs and cattle. Sometimes these animals can transmit coronaviruses to humans however several known coronaviruses are circulating in animals that have not yet affected humans.
+Scientists first found evidence of human coronavirus in 1960s in the noses of people with common cold.
+The name 'corona' comes from the 'crown-like projections' on their surface. "Corona" in latin means "crown". Among humans coronavirus infections often occur during winter months.
+</h6>
+
+<hr>
+
+<h6>
+  Most recently, a new corona virus outbreak was identified in Wuhan,China which has now reached other countries. It's name is Corona Virus Disease-2019 or COVID-19. It was newly discovered in 2019 and was never identified in humans previously.
+  On January 31, 2020 the virus passed from one person to another in the U.S.
+   WHO has declared "public health emergency".
+   The first people with COVID-19 had links to an animal, this suggested that animals transmitted the virus to humans but people with a more recent diagnosis had no exposure to the market,  confirming that humans can pass the virus to each other.
+
+
+
+   The virus that causes COVID-19 seems to be spreading easily it is mainly spread by people having  close contact with each other (less than 6 feet) and also through respiratory droplets produced when infected person coughs or sneezes.
+
+  These droplets can reach the mouth or nose of people who are around and can be inhaled into the lungs and thus infecting the person.
+  An infected person is considered to be most contagious when they are most symptomatic.
+  But sometimes people without showing any symptoms can also spread the virus.
+  The virus can also be spread through contaminated surface or object if one touches the surface which has the traces of virus on it and then touches his face, mouth, nose or eyes. Touching or shaking hands with the person who has the virus can pass the virus between individuals.
+</h6>
+
+
+
+
+
+</div>
+
+<!-- /.container -->
+
+
+
+
+
+
+
+{% endblock %}

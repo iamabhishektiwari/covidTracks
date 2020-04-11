@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from globalTracks import views as gv
+from indiaTracks import views as iv
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('global/', include('globalTracks.urls')),
     path('india/', include('indiaTracks.urls')),
+    path('about-covid19', gv.Covid.as_view(),name='about_covid19'),
+    path('', iv.India.as_view(),name='HomePage')
 ]

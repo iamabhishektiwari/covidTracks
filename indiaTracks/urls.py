@@ -22,5 +22,8 @@ urlpatterns = [
     # path('maps', views.Map.as_view(),name='map'),
     # path('State-chart', views.SateCharts.as_view() , name="state_chart"),
     path('news', views.News.as_view() , name="india_news"),
+    path('update-data', views.DataUpdate.as_view(),name='India_data_update'),
+    path('maps', views.Map.as_view(),name='india_map'),
+    path('helpline', views.Helpline.as_view(),name='india_helpline'),
 
 ]

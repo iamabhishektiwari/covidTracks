@@ -1,0 +1,173 @@
+
+{% extends 'base.html' %}
+{% block title %}
+India-Status
+{% endblock %}
+{% load mathfilters %}
+
+{% block content %}
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {
+    'packages':['geochart'],
+    // Note: you will need to get a mapsApiKey for your project.
+    // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+    'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+  });
+      google.charts.setOnLoadCallback(drawVisualization);
+
+      google.load('visualization', '1', {'packages': ['geochart']});
+      google.setOnLoadCallback(drawVisualization);
+
+      function drawVisualization() {
+      var data = google.visualization.arrayToDataTable({{ retlist |safe}});
+
+      var opts = {
+      region: 'IN',
+      displayMode: 'regions',
+      resolution: 'provinces',
+      colorAxis: {colors: ['pink', 'red']}
+      };
+      var geochart = new google.visualization.GeoChart(
+        document.getElementById('visualization'));
+      geochart.draw(data, opts);
+      };
+
+
+
+</script>
+
+<style media="screen">
+
+  #map {
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+  }
+  .container-fluid{
+    width: 97%;
+    padding: 1%;
+    margin: 1%;
+    background-color: white;
+    border-radius: 10px;
+  }
+  .container-fx{
+    width: 97%;
+    padding: 1%;
+    margin: 1%;
+    background-color: lightgrey;
+    border-radius: 10px;
+  }
+  .header-box{
+    width: 80%;
+    height: 1%;
+    background-color: white;
+  }
+  .btn-sp{
+    border-radius: 15px;
+    margin: 10px;
+    width: 90%;
+
+  }
+
+  span{
+    height:30px;
+    width:auto;
+    float:right;
+  }
+
+  .my-fixed-scrollbar{
+    background-color:white;
+  }
+
+  p{
+  color: white;
+  font-family: arial;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.small-width{
+  margin-left:5%;
+  padding-left:5%;
+  width:80%;
+}
+h3{
+  color:blue;
+}
+a{
+  color:red;
+}
+.pdd{
+  margin-left:10%;
+}
+.pdd2{
+  margin-left:50%;
+}
+.pdd3{
+  margin-left:90%;
+}
+.txt{
+  color:black;
+}
+</style>
+
+<div class="container-fluid header-box">
+  <div class="row">
+    <div class="col-md-8">
+     <h4>Coronavirus Outbreak in India</h4>
+
+
+
+       <button class="btn btn-outline-warning btn-sm">
+         <div class="h7 "> Confirmed</div>
+         <div class="h7 ">{{ totalconfirmed }}</div>
+       </button>
+
+
+       <button class="btn btn-outline-success btn-sm">
+         <div class="h7 "> Recovered</div>
+         <div class="h7 ">{{ totalrecovered }}</div>
+       </button>
+
+       <button class="btn btn-outline-danger btn-sm">
+         <div class="h7 "> Deaths</div>
+         <div class="h7 ">{{ totaldeaths }}</div>
+       </button>
+
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-9">
+      <div id="visualization"></div>
+    </div>
+    <div class="col-sm my-fixed-scrollbar">
+
+
+        {% for state in states %}
+
+        {% if state.totalconfirmed > 0 %}
+
+            <button name="named" value="{{ state.name }}" class="btn btn-light btn-sp text-left">
+              {{ state.name }}
+              <span class="space">  </span>
+              <span class="btn btn-outline-danger">{{state.totalconfirmed}}</span>
+            </button>
+          {% endif %}
+
+          {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}
