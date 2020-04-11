@@ -7,7 +7,7 @@ India-Status
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+
 <style media="screen">
 
   .container-fluid{
@@ -116,8 +116,8 @@ a{
               </li>
 
               <li class="list-group-item list-group-item-danger">
-                  <div class="h6"> <b>+</b></div>
-                  <div class="h4"><strong> {{ nongov_deltaconfirmed }} </strong></div>
+                  <div class="h6"> Recent </div>
+                  <div class="h4"><strong> +{{ nongov_deltaconfirmed }} </strong></div>
               </li>
 
           </ul>
@@ -259,12 +259,12 @@ a{
              <div class="d-flex">
                  <div class="d-flex">
                    <div class="row">
-                     <div class="ml-2 padding_extra">
-                         <div class="h5 m-0">{{ statek.name }}</div>
+                     <div class="ml-4 padding_extra rightextra">
+                       <button class="btn btn-outline-dark btn-sm white">
+                         <div class="h7 "> </div>
+                         <div class="h5 ">{{ statek.name }}</div>
+                       </button>
                      </div>
-                     &nbsp &nbsp
-                      &nbsp &nbsp
-                      &nbsp &nbsp
                      <div class="ml-2 padding_extra">
                        <button class="btn btn-outline-secondary btn-sm yellow">
                          <div class="h7 "> Confirmed</div>
@@ -285,6 +285,7 @@ a{
                          <div class="h7 ">{{ statek.deaths }}</div>
                        </button>
                      </div>
+                     &nbsp &nbsp
                      <div class="ml-2 padding_extra">
                        <button class="btn btn-outline-secondary btn-sm">
                          <div class="h7 "> Last-update</div>
@@ -292,12 +293,7 @@ a{
                        </button>
                      </div>
                      &nbsp &nbsp
-                      &nbsp &nbsp
-                      &nbsp &nbsp
-                       &nbsp &nbsp
-                       &nbsp &nbsp
-                        &nbsp &nbsp
-                     <div class="ml-2 padding_extra">
+                     <div class="ml-2 padding_extra float-left">
                        {% if statek.district_present %}
                        <button class="btn btn-outline-light btn-sm" type="button" data-toggle="collapse" data-target="#{{statek.statecode |safe}}" aria-expanded="false" aria-controls="collapseExample"">
 
