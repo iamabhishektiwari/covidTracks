@@ -126,6 +126,9 @@ a{
 
 
       <div class="card bg-dark mb-3 txt" style="max-width: 18rem;">
+        <div class="card-header bg-dark">
+          India
+          </div>
         <div class="card-body">
           <div class="progress">
             <div class="progress-bar bg-success"
@@ -221,6 +224,9 @@ a{
 
 
       <div class="card bg-dark mb-3 txt" style="max-width: 18rem;">
+        <div class="card-header bg-dark">
+          {{statek.name}}
+          </div>
         <div class="card-body">
           <div class="progress">
             <div class="progress-bar bg-success"
@@ -250,35 +256,36 @@ a{
         <!--- \\\\\\\Post-->
         <div class="card gedf-card bg-color">
           <div class="card-header bg-dark">
-             <div class="d-flex justify-content-between align-items-center">
-                 <div class="d-flex justify-content-between align-items-center">
-                     <div class="ml-2">
+             <div class="d-flex">
+                 <div class="d-flex">
+                   <div class="row">
+                     <div class="ml-2 padding_extra">
                          <div class="h5 m-0">{{ statek.name }}</div>
                      </div>
                      &nbsp &nbsp
                       &nbsp &nbsp
                       &nbsp &nbsp
-                     <div class="ml-2">
+                     <div class="ml-2 padding_extra">
                        <button class="btn btn-outline-secondary btn-sm yellow">
                          <div class="h7 "> Confirmed</div>
                          <div class="h7 ">{{ statek.confirmed }}</div>
                        </button>
                      </div>
                      &nbsp &nbsp
-                     <div class="ml-2">
+                     <div class="ml-2 padding_extra">
                        <button class="btn btn-outline-secondary btn-sm green">
                          <div class="h7 "> Recovered</div>
                          <div class="h7 ">{{ statek.recovered }}</div>
                        </button>
                      </div>
                      &nbsp &nbsp
-                     <div class="ml-2">
+                     <div class="ml-2 padding_extra">
                        <button class="btn btn-outline-secondary btn-sm red">
                          <div class="h7 "> Deaths</div>
                          <div class="h7 ">{{ statek.deaths }}</div>
                        </button>
                      </div>
-                     <div class="ml-2">
+                     <div class="ml-2 padding_extra">
                        <button class="btn btn-outline-secondary btn-sm">
                          <div class="h7 "> Last-update</div>
                          <div class="h7 ">{{ statek.lastupdate }}</div>
@@ -290,14 +297,16 @@ a{
                        &nbsp &nbsp
                        &nbsp &nbsp
                         &nbsp &nbsp
-                     <div class="ml-2">
+                     <div class="ml-2 padding_extra">
                        {% if statek.district_present %}
                        <button class="btn btn-outline-light btn-sm" type="button" data-toggle="collapse" data-target="#{{statek.statecode |safe}}" aria-expanded="false" aria-controls="collapseExample"">
 
-                          Table &nbsp <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                          Table &nbsp
+                          <div class="h7 "><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
 
                        </button>
                        {% endif %}
+                     </div>
                      </div>
                  </div>
              </div>
