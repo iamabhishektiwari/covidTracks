@@ -13,7 +13,8 @@ class Country(models.Model):
     lastupdate = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        res = self.name[0]+self.name[1]+str(self.totalrecovered)+str(self.totaldeaths)
+        return res
 
 class Province(models.Model):
     name = models.CharField(max_length=100)

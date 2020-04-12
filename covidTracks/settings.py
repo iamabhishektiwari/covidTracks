@@ -24,9 +24,9 @@ MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'adgi4+3b84p=p7-m6yl@f)n-bs1&g7*=j!^jz50j6(%^2-)u7('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','covidtracks.pythonanywhere.com']
+ALLOWED_HOSTS = ['localhost','covidtracks.pythonanywhere.com','covidtracks.in','www.covidtracks.in']
 
 
 # Application definition

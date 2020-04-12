@@ -29,6 +29,9 @@ Data-Plot
       padding:1%;
       margin:1%;
     }
+    .pds_padding{
+      margin-top:20px;
+    }
   </style>
 
   <div class="container-fluid gedf-wrapper">
@@ -156,7 +159,7 @@ Data-Plot
 
         {% for region,subregions in subregionlist.items %}
         <!--- country wise table-->
-        <div class="col-md-3">
+        <div class="col-md-3 pds_padding">
             <div class="card bg-dark txt">
               <div class="card-header bg-dark">
                 {{region.name}}
@@ -186,9 +189,9 @@ Data-Plot
                 </div>
             </div>
         </div>
-        <div class="col-md-9 gedf-main ">
+        <div class="col-md-9 gedf-main pds_padding">
             <!--- \\\\\\\Post-->
-            <div class="card gedf-card bg-color">
+            <div class="card gedf-card bg-color pds_padding">
               <div class="card-header bg-dark">
                  <div class="d-flex ">
                      <div class="d-flex">
@@ -216,10 +219,20 @@ Data-Plot
                            <div class="h7 ">{{ region.totaldeaths }}</div>
                            </button>
                          </div>
+                         <div class="ml-2 padding_extra float-left">
+
+                           <button class="btn btn-outline-light btn-sm" type="button" data-toggle="collapse" data-target="#{{region |safe}}" aria-expanded="false" aria-controls="collapseExample"">
+
+                              Table &nbsp
+                              <div class="h7 "><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
+
+                           </button>
+                         </div>
                          </div>
                      </div>
                  </div>
              </div>
+             <div class="collapse" id="{{region}}">
              <div class="card-body">
                <div class="table-wrapper-scroll-y my-custom-scrollbar">
                   <table class="table table-dark table-sm table-condensed">
@@ -243,6 +256,7 @@ Data-Plot
                     </tbody>
                   </table>
                   </div>
+              </div>
               </div>
             </div>
         </div>
