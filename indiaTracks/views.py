@@ -10,6 +10,8 @@ from getNews import NewsFromApi
 from .updateData import fetchData, findDataSample2
 import os
 import random
+from .forms import NameForm
+import difflib
 # Create your views here.
 THIS_FOLDER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -91,10 +93,10 @@ class Map(View):
 
 
 class India(View):
-
     mytemplate = 'india_status.html'
     unsupported = 'Unsupported operation'
     def get(self, request):
+        form = NameForm()
 
         record_update_time = ImpParam.objects.get(key='record_update_time').value
         nongov_lastupdate = ImpParam.objects.get(key='nongov_lastupdate').value
@@ -142,11 +144,97 @@ class India(View):
             'nongov_deltaconfirmed':nongov_deltaconfirmed,
             'nongov_lastupdate':nongov_lastupdate,
             'totalactive':totalactive,
+            'form':form,
+            'searchBool':False,
         }
         return render(request,self.mytemplate,context=context)
 
     def post(self, request):
-        return HttpResponse(self.unsupported)
+
+        districtall = District.objects.all()
+        DistrictOptions = []
+        for dc in districtall:
+            DistrictOptions.append(dc.name)
+
+        form1 = NameForm()
+        form = NameForm(request.POST)
+        extraoptionsbool = False
+        searchResBool = False
+        searchdistrictName = ""
+        searchMessage = ""
+        searchRes = {}
+        if form.is_valid():
+            searchdistrictName = form.cleaned_data['districtName']
+            closeoptions = difflib.get_close_matches(searchdistrictName, DistrictOptions)
+            if(len(closeoptions)>0):
+                searchResBool = True
+                closest = closeoptions[0]
+                if(closest.lower() == searchdistrictName.lower()):
+                    searchMessage = "Dingg"
+                if(closest):
+                    searchRes = District.objects.all().filter(name=closest)
+            else:
+                searchResBool = False
+
+        record_update_time = ImpParam.objects.get(key='record_update_time').value
+        nongov_lastupdate = ImpParam.objects.get(key='nongov_lastupdate').value
+
+        totalconfirmed = ImpParam.objects.get(key='totalconfirmed').value
+        totalrecovered = ImpParam.objects.get(key='totalrecovered').value
+        totaldeaths = ImpParam.objects.get(key='totaldeaths').value
+        totalactive = int(totalconfirmed) - int(totaldeaths)-int(totalrecovered)-1;
+
+        # r = Region.objects.get(name='India')
+        # subregions = SubRegion.objects.all().filter(region=r).order_by('-totalconfirmed')
+        states = States.objects.all().order_by('-totalconfirmed')
+
+        StateDistrict = {}
+
+        statek = State_k.objects.all().filter(confirmed__gte=1).order_by('-confirmed')
+        for ss in statek:
+            dists = District.objects.all().filter(state=ss).order_by('-confirmed')
+            StateDistrict[ss] = dists
+
+
+
+        nongov_totalconfirmed = ImpParam.objects.get(key='nongov_totalconfirmed').value
+        nongov_totalrecovered = ImpParam.objects.get(key='nongov_totalrecovered').value
+        nongov_totaldeaths = ImpParam.objects.get(key='nongov_totaldeaths').value
+        nongov_active = ImpParam.objects.get(key='nongov_active').value
+        nongov_deltaconfirmed = ImpParam.objects.get(key='nongov_deltaconfirmed').value
+
+        fake_update = random.randint(0,30);
+
+        printCloseOptions = []
+        for closeoption in closeoptions:
+            if(closeoption!=closest):
+                printCloseOptions.append(closeoption)
+
+        if(len(printCloseOptions)>0):
+            extraoptionsbool = True
+
+        context = {
+            'states':states,
+            'totalconfirmed':totalconfirmed,
+            'totalrecovered':totalrecovered,
+            'totaldeaths':totaldeaths,
+            'phoneno':stateinfo['phoneno'],
+            'StateDistrict':StateDistrict,
+            'record_update_time':record_update_time,
+            'nongov_totalconfirmed':nongov_totalconfirmed,
+            'nongov_totalrecovered':nongov_totalrecovered,
+            'nongov_totaldeaths':nongov_totaldeaths,
+            'nongov_active':nongov_active,
+            'nongov_deltaconfirmed':nongov_deltaconfirmed,
+            'nongov_lastupdate':nongov_lastupdate,
+            'totalactive':totalactive,
+            'form':form1,
+            'extraoptionsbool':extraoptionsbool,
+            'searchResBool':searchResBool,
+            'searchRes':searchRes,
+            'closeoptions':printCloseOptions,
+        }
+        return render(request,self.mytemplate,context=context)
 
 
 
