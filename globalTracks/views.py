@@ -4,7 +4,7 @@ import requests
 from .models import Country, Province, City, ImpParam
 import time
 from django.db.models import Sum
-from .updateData import fetchData, InternalCalculations, GlobalTotalCalc
+from .updateData import fetchData, InternalCalculations, GlobalTotalCalc, smallGraph, globalTimeSeries,SaveRenderTimeSeriesData
 from django.http import HttpResponse,HttpResponseRedirect
 from datetime import datetime
 from getNews import NewsFromApi
@@ -34,7 +34,7 @@ class DataUpdate(View):
         fetchData()
         InternalCalculations()
         GlobalTotalCalc()
-        #globalTimeSeries()
+        globalTimeSeries()
 
         context = {
             'message':"Success",
@@ -82,11 +82,11 @@ class Global(View):
 class Map(View):
     mytemplate = 'global_maps.html'
     unsupported = 'Unsupported operation'
-    # top4 = Country.objects.all().order_by('-totalconfirmed')[0:4]
-    # rowdata1 = smallGraph(top4[0])
-    # rowdata2 = smallGraph(top4[1])
-    # rowdata3 = smallGraph(top4[2])
-    # rowdata4 = smallGraph(top4[3])
+    top4 = Country.objects.all().order_by('-totalconfirmed')[0:4]
+    rowdata1 = smallGraph(top4[0])
+    rowdata2 = smallGraph(top4[1])
+    rowdata3 = smallGraph(top4[2])
+    rowdata4 = smallGraph(top4[3])
     def get(self, request):
 
         regions = Country.objects.all().order_by('-totalconfirmed')
@@ -115,14 +115,14 @@ class Map(View):
             'activefor':"Global",
             'graph_data':graph_data,
             'options':options,
-            # 'top1':self.top4[0],
-            # 'top2':self.top4[1],
-            # 'top3':self.top4[2],
-            # 'top4':self.top4[3],
-            # 'rowdata1':self.rowdata1,
-            # 'rowdata2':self.rowdata2,
-            # 'rowdata3':self.rowdata3,
-            # 'rowdata4':self.rowdata4,
+            'top1':self.top4[0],
+            'top2':self.top4[1],
+            'top3':self.top4[2],
+            'top4':self.top4[3],
+            'rowdata1':self.rowdata1,
+            'rowdata2':self.rowdata2,
+            'rowdata3':self.rowdata3,
+            'rowdata4':self.rowdata4,
         }
         return render(request,self.mytemplate,context)
 

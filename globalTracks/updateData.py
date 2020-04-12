@@ -171,48 +171,48 @@ def update():
     GlobalTotalCalc()
 
 
-# def globalTimeSeries():
-#     print("###################################################")
-#     print("Updating Global Timeseries")
-#     print("###################################################")
-#     url = "https://covid19-india-data.herokuapp.com/GlobalTimeSeries"
-#     page = requests.get(url).json()
-#     my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
-#     with open(my_file, 'w') as outfile:
-#         json.dump(page, outfile)
-#
-#
-#
-#
-#
-# def SaveRenderTimeSeriesData(countries):
-#     page = {}
-#     my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
-#     with open(my_file, "r") as read_file:
-#         page = json.load(read_file)
-#     rowdata = []
-#     i=1;
-#     for day in dateinfo:
-#         tmpls = [i]
-#         i = i+1
-#         for country in countries:
-#             tmpls.append(page[country.name]['data'][day]['confirm'])
-#         rowdata.append(tmpls);
-#     return rowdata
-#
-#
-#
-# def smallGraph(country):
-#     page = {}
-#     my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
-#     with open(my_file, "r") as read_file:
-#         page = json.load(read_file)
-#     rowdata = []
-#     i =1
-#     for day in dateinfo:
-#         rowdata.append([i,
-#                         page[country.name]['data'][day]['confirm'],
-#                         page[country.name]['data'][day]['deaths'],
-#                         page[country.name]['data'][day]['recovered']])
-#         i = i+1
-#     return rowdata
+def globalTimeSeries():
+    print("###################################################")
+    print("Updating Global Timeseries")
+    print("###################################################")
+    url = "https://covid19-india-data.herokuapp.com/GlobalTimeSeries"
+    page = requests.get(url).json()
+    my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
+    with open(my_file, 'w') as outfile:
+        json.dump(page, outfile)
+
+
+
+
+
+def SaveRenderTimeSeriesData(countries):
+    page = {}
+    my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
+    with open(my_file, "r") as read_file:
+        page = json.load(read_file)
+    rowdata = []
+    i=1;
+    for day in dateinfo:
+        tmpls = [i]
+        i = i+1
+        for country in countries:
+            tmpls.append(page[country.name]['data'][day]['confirm'])
+        rowdata.append(tmpls);
+    return rowdata
+
+
+
+def smallGraph(country):
+    page = {}
+    my_file = os.path.join(THIS_FOLDER, 'helper_data/globaltimeseries.json')
+    with open(my_file, "r") as read_file:
+        page = json.load(read_file)
+    rowdata = []
+    i =1
+    for day in dateinfo:
+        rowdata.append([i,
+                        page[country.name]['data'][day]['confirm'],
+                        page[country.name]['data'][day]['deaths'],
+                        page[country.name]['data'][day]['recovered']])
+        i = i+1
+    return rowdata

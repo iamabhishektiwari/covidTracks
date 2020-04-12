@@ -9,6 +9,7 @@ import json
 from getNews import NewsFromApi
 from .updateData import fetchData, findDataSample2
 import os
+import random
 # Create your views here.
 THIS_FOLDER = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -91,15 +92,17 @@ class Map(View):
 
 class India(View):
 
-    record_update_time = ImpParam.objects.get(key='record_update_time').value
-    nongov_lastupdate = ImpParam.objects.get(key='nongov_lastupdate').value
     mytemplate = 'india_status.html'
     unsupported = 'Unsupported operation'
     def get(self, request):
 
+        record_update_time = ImpParam.objects.get(key='record_update_time').value
+        nongov_lastupdate = ImpParam.objects.get(key='nongov_lastupdate').value
+
         totalconfirmed = ImpParam.objects.get(key='totalconfirmed').value
         totalrecovered = ImpParam.objects.get(key='totalrecovered').value
         totaldeaths = ImpParam.objects.get(key='totaldeaths').value
+        totalactive = int(totalconfirmed) - int(totaldeaths)-int(totalrecovered)-1;
 
         # r = Region.objects.get(name='India')
         # subregions = SubRegion.objects.all().filter(region=r).order_by('-totalconfirmed')
@@ -120,6 +123,7 @@ class India(View):
         nongov_active = ImpParam.objects.get(key='nongov_active').value
         nongov_deltaconfirmed = ImpParam.objects.get(key='nongov_deltaconfirmed').value
 
+        fake_update = random.randint(0,30);
 
 
 
@@ -130,13 +134,14 @@ class India(View):
             'totaldeaths':totaldeaths,
             'phoneno':stateinfo['phoneno'],
             'StateDistrict':StateDistrict,
-            'record_update_time':self.record_update_time,
+            'record_update_time':record_update_time,
             'nongov_totalconfirmed':nongov_totalconfirmed,
             'nongov_totalrecovered':nongov_totalrecovered,
             'nongov_totaldeaths':nongov_totaldeaths,
             'nongov_active':nongov_active,
             'nongov_deltaconfirmed':nongov_deltaconfirmed,
-            'nongov_lastupdate':self.nongov_lastupdate,
+            'nongov_lastupdate':nongov_lastupdate,
+            'totalactive':totalactive,
         }
         return render(request,self.mytemplate,context=context)
 

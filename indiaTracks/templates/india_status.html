@@ -82,11 +82,30 @@ a{
   padding-top:1%;
   margin-top:1%;
 }
+.curve{
+  border-radius:10px;
+  margin:20px;
+}
+.curve1{
+  border-radius:10px;
+}
+.padding_left{
+  margin-left:20px;
+}
 </style>
 
 
 
 <div class="container-fx gedf-wrapper">
+
+  <div class="col-md-10 bg-dark curve1">
+    <nav aria-label="breadcrumb bg-dark">
+      <ol class="breadcrumb bg-dark">
+        <li class="breadcrumb-item white h5" aria-current="page">Data Collected from Ministry of Health and Family Welfare</li>
+        <li class="h8 text red">&nbsp Updated {{ record_update_time}}</li>
+      </ol>
+    </nav>
+  </div>
 
   <!--- world table-->
   <div class="row">
@@ -95,31 +114,26 @@ a{
 
 
       <div class="card bg-dark mb-3" style="max-width: 18rem;">
-        <div class="card-header">Daily counter | India <br> updated at - {{ nongov_lastupdate}}</div>
+        <div class="card-header">Daily counter | India
+            </div>
         <div class="card-body">
           <ul class="list-group list-group-flush">
               <li class="list-group-item list-group-item-warning">
                   <div class="h6">Total Confirmed Cases</div>
-                  <div class="h4"> <strong>{{ nongov_totalconfirmed}} </strong></div>
+                  <div class="h4"> <strong>{{ totalconfirmed}} </strong></div>
               </li>
               <li class="list-group-item list-group-item-primary">
                   <div class="h6">Total Active</div>
-                  <div class="h4"><strong> {{ nongov_active }} </strong></div>
+                  <div class="h4"><strong> {{ totalactive }} </strong></div>
               </li>
               <li class="list-group-item list-group-item-success">
                   <div class="h6">Total Recovered</div>
-                  <div class="h4"><strong>{{ nongov_totalrecovered }} </strong></div>
+                  <div class="h4"><strong>{{ totalrecovered }} </strong></div>
               </li>
               <li class="list-group-item danger">
                   <div class="h6">Total Deaths</div>
-                  <div class="h4"><strong> {{ nongov_totaldeaths }} </strong></div>
+                  <div class="h4"><strong> {{ totaldeaths }} </strong></div>
               </li>
-
-              <li class="list-group-item list-group-item-danger">
-                  <div class="h6"> Recent </div>
-                  <div class="h4"><strong> +{{ nongov_deltaconfirmed }} </strong></div>
-              </li>
-
           </ul>
         </div>
       </div>
@@ -214,6 +228,82 @@ a{
           <b> &nbsp As Per Ministry of Health and Family Welfare,Government ministry | {{ record_update_time }}</b>
         </div>
     </div>
+
+<!-- various news source data -->
+
+
+
+  <div class="col-md-10 bg-dark curve">
+    <nav aria-label="breadcrumb bg-dark">
+      <ol class="breadcrumb bg-dark">
+        <li class="breadcrumb-item white h5" aria-current="page">Data Collected from various news sources</li>
+        <li class="h8 text red">&nbsp Updated on {{ nongov_lastupdate}}</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="col-md-12 ">
+    <div class="row">
+
+      <div class="card bg-dark padding_left" style="width: 15rem;">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item list-group-item-danger">
+                  <div class="h6"> Recent <br>detected </div>
+                  <div class="h4"> <strong> + {{ nongov_deltaconfirmed}} </strong></div>
+              </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-dark padding_left" style="width: 15rem;">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item list-group-item-warning">
+                  <div class="h6">Total <br>Confirmed </div>
+                  <div class="h4"> <strong>{{ nongov_totalconfirmed}} </strong></div>
+              </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-dark padding_left" style="width: 15rem;">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item list-group-item-primary">
+                  <div class="h6">Total <br>Active </div>
+                  <div class="h4"> <strong>{{ nongov_active}} </strong></div>
+              </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-dark padding_left" style="width: 15rem;">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item list-group-item-success">
+                  <div class="h6">Total <br>Recovered </div>
+                  <div class="h4"> <strong>{{ nongov_totalrecovered}} </strong></div>
+              </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card bg-dark padding_left" style="width: 15rem;">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+              <li class="list-group-item danger">
+                  <div class="h6">Total <br> Death </div>
+                  <div class="h4"> <strong>{{ nongov_totaldeaths}} </strong></div>
+              </li>
+          </ul>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- various news source data -->
 
     <!-- State Data -->
 
