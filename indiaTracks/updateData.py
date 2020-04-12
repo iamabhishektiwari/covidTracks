@@ -177,3 +177,6 @@ def findDataSample2():
             param6.save()
             param7.save()
             param8.save()
+def update():
+    fetchData()
+    findDataSample2()
